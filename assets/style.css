@@ -61,7 +61,12 @@ img { max-width: 100%; }
   letter-spacing: 0.5px;
   line-height: 1.2;
 }
-
+.map-container {
+  margin-bottom: 40px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px hsla(0,0%,0%,0.1);
+}
 .nav-brand-text .sub {
   font-size: 10px;
   color: hsla(0,0%,100%,0.55);
