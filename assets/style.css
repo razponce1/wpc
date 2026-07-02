@@ -429,11 +429,13 @@ img { max-width: 100%; }
 
 .about-wpc-logo {
   font-family: var(--ff-heading);
-  font-size: 48px;
-  font-weight: 900;
+  font-size: 22px;
+  font-weight: 800;
   color: var(--red);
-  letter-spacing: -2px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .about-wpc-full {
