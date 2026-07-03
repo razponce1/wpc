@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WPC Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #CC0000;
+  --red-dark: #A30000;
+  --navy: #1A1A6E;
+  --navy-dark: #0F0F4A;
+  --white: #FFFFFF;
+  --off-white: #F8F8F8;
+  --gray: #6B7280;
+  --gray-light: #F3F4F6;
+  --gray-border: #E5E7EB;
+  --text: #1F2937;
+  --green: #059669;
+  --yellow: #D97706;
+  --ff-heading: 'Montserrat', sans-serif;
+  --ff-body: 'Open Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--ff-body); background: var(--off-white); color: var(--text); min-height: 100vh; }
+
+/* LOGIN */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--navy-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.login-box {
+  background: white;
+  border-radius: 18px;
+  padding: 40px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 25px 50px hsla(0,0%,0%,0.3);
+}
+
+.login-logo {
+  font-family: var(--ff-heading);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+
+.login-sub {
+  font-size: 12px;
+  color: var(--gray);
+  margin-bottom: 28px;
+}
+
+.login-title {
+  font-family: var(--ff-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 20px;
+}
+
+.login-field {
+  margin-bottom: 16px;
+}
+
+.login-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.login-field input {
+  width: 100%;
+  background: var(--off-white);
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.login-field input:focus { border-color: var(--red); }
+
+.login-btn {
+  width: 100%;
+  background: var(--red);
+  color: white;
+  font-family: var(--ff-heading);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: 0.2s ease;
+}
+.login-btn:hover { background: var(--red-dark); }
+
+.login-error {
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+
+/* HEADER */
+.header {
+  background: var(--navy-dark);
+  border-bottom: 3px solid var(--red);
+  padding: 0 30px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-brand {
+  font-family: var(--ff-heading);
+  font-weight: 800;
+  font-size: 16px;
+  color: white;
+}
+
+.header-brand span { color: var(--red); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-badge {
+  background: hsla(0,0%,100%,0.1);
+  color: hsla(0,0%,100%,0.8);
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-family: var(--ff-heading);
+}
+
+.logout-btn {
+  background: var(--red);
+  color: white;
+  font-family: var(--ff-heading);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.logout-btn:hover { background: var(--red-dark); }
+
+/* MAIN */
+.main { padding: 30px; max-width: 1200px; margin: 0 auto; }
+
+/* STATS */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 768px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+.stat-card {
+  background: white;
+  border: 1px solid var(--gray-border);
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--red);
+}
+
+.stat-num {
+  font-family: var(--ff-heading);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* TOOLBAR */
+.toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  background: white;
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  outline: none;
+}
+.search-input:focus { border-color: var(--red); }
+
+.filter-select {
+  background: white;
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  outline: none;
+  color: var(--text);
+}
+
+.refresh-btn {
+  background: var(--navy-dark);
+  color: white;
+  font-family: var(--ff-heading);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.refresh-btn:hover { background: var(--navy); }
+
+/* TABLE */
+.table-wrap {
+  background: white;
+  border: 1px solid var(--gray-border);
+  border-radius: 14px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.table-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-title {
+  font-family: var(--ff-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy-dark);
+}
+
+.table-count {
+  font-size: 12px;
+  color: var(--gray);
+  background: var(--off-white);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+thead th {
+  background: var(--off-white);
+  font-family: var(--ff-heading);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--gray-border);
+  transition: 0.15s ease;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--off-white); }
+
+tbody td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text);
+  vertical-align: top;
+}
+
+.td-name { font-weight: 600; }
+.td-email { color: var(--gray); font-size: 12px; margin-top: 2px; }
+.td-date { font-size: 12px; color: var(--gray); white-space: nowrap; }
+.td-message { max-width: 200px; color: var(--gray); font-size: 12px; line-height: 1.5; }
+
+.subject-tag {
+  display: inline-block;
+  background: hsla(0,100%,40%,0.08);
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* LOADING & EMPTY */
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray);
+  font-size: 14px;
+}
+
+.loading-spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--gray-border);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: hsla(0,0%,0%,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 500;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s ease;
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal-box {
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  transition: 0.2s ease;
+}
+.modal-overlay.active .modal-box { transform: scale(1); }
+
+.modal-title {
+  font-family: var(--ff-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--gray-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-close {
+  background: var(--off-white);
+  border: none;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.modal-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.modal-label {
+  font-weight: 600;
+  color: var(--navy-dark);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.modal-value { color: var(--gray); line-height: 1.6; }
+
+.modal-message-box {
+  background: var(--off-white);
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-top: 14px;
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">WORTHRAND</div>
+    <div class="login-sub">Petropower Corporation — Admin Portal</div>
+    <div class="login-title">Sign In</div>
+    <div class="login-field">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-error" id="loginError">Incorrect username or password.</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">WPC <span>Admin</span></div>
+  <div class="header-right">
+    <div class="header-badge">📊 Inquiries Dashboard</div>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-label">Total Inquiries</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statToday">—</div>
+      <div class="stat-label">Today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statWeek">—</div>
+      <div class="stat-label">This Week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statMonth">—</div>
+      <div class="stat-label">This Month</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search by name, email, or subject...">
+    <select class="filter-select" id="filterSubject">
+      <option value="">All subjects</option>
+      <option>Industrial Process Pumps</option>
+      <option>Oil & Gas Pumps</option>
+      <option>Chemical Pumps</option>
+      <option>Gear Pumps</option>
+      <option>Marine Pump Supply</option>
+      <option>Spare Parts & After-Sales</option>
+      <option>General Inquiry</option>
+    </select>
+    <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div class="table-header">
+      <div class="table-title">Inquiry Records</div>
+      <div class="table-count" id="tableCount">Loading...</div>
+    </div>
+    <div id="tableContainer">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        Loading inquiries...
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-title">
+      <span>Inquiry Details</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznzt6LKktB3JUuuYCUqWqmnN_ZKfBkJsaee3QOxu2xX-Pz6IrjyVkzN2ickiVip20pGw/exec';
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'wpc2026';
+
+let allData = [];
+
+// LOGIN
+function doLogin() {
+  const user = document.getElementById('loginUser').value;
+  const pass = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+
+  if (user === ADMIN_USER && pass === ADMIN_PASS) {
+    document.getElementById('loginOverlay').style.display = 'none';
+    loadData();
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function doLogout() {
+  document.getElementById('loginOverlay').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+// LOAD DATA
+async function loadData() {
+  document.getElementById('tableContainer').innerHTML = '<div class="loading-state"><div class="loading-spinner"></div>Loading inquiries...</div>';
+  document.getElementById('tableCount').textContent = 'Loading...';
+
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const json = await res.json();
+
+    if (json.status === 'success') {
+      allData = json.data.reverse();
+      updateStats();
+      renderTable(allData);
+    } else {
+      showError('Failed to load data.');
+    }
+  } catch (err) {
+    showError('Cannot connect to database.');
+  }
+}
+
+function showError(msg) {
+  document.getElementById('tableContainer').innerHTML = '<div class="empty-state">⚠️ ' + msg + '</div>';
+  document.getElementById('tableCount').textContent = 'Error';
+}
+
+// STATS
+function updateStats() {
+  const now = new Date();
+  const today = now.toDateString();
+  const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+  const monthAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
+
+  let todayCount = 0, weekCount = 0, monthCount = 0;
+
+  allData.forEach(row => {
+    const d = new Date(row['DATE']);
+    if (d.toDateString() === today) todayCount++;
+    if (d >= weekAgo) weekCount++;
+    if (d >= monthAgo) monthCount++;
+  });
+
+  document.getElementById('statTotal').textContent = allData.length;
+  document.getElementById('statToday').textContent = todayCount;
+  document.getElementById('statWeek').textContent = weekCount;
+  document.getElementById('statMonth').textContent = monthCount;
+}
+
+// RENDER TABLE
+function renderTable(data) {
+  document.getElementById('tableCount').textContent = data.length + ' records';
+
+  if (data.length === 0) {
+    document.getElementById('tableContainer').innerHTML = '<div class="empty-state">📭 No inquiries found.</div>';
+    return;
+  }
+
+  const rows = data.map((row, i) => {
+    const date = row['DATE'] ? new Date(row['DATE']).toLocaleDateString('en-PH', {year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    return `
+      <tr onclick="openModal(${i})" style="cursor:pointer;">
+        <td class="td-date">${date}</td>
+        <td>
+          <div class="td-name">${row['FIRST NAME'] || ''} ${row['LAST NAME'] || ''}</div>
+          <div class="td-email">${row['EMAIL'] || ''}</div>
+        </td>
+        <td>${row['PHONE'] || '—'}</td>
+        <td><span class="subject-tag">${row['SUBJECT'] || '—'}</span></td>
+        <td class="td-message">${(row['MESSAGE'] || '').substring(0, 80)}${(row['MESSAGE'] || '').length > 80 ? '...' : ''}</td>
+      </tr>
+    `;
+  }).join('');
+
+  document.getElementById('tableContainer').innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name / Email</th>
+          <th>Phone</th>
+          <th>Subject</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+// SEARCH & FILTER
+document.getElementById('searchInput').addEventListener('input', filterData);
+document.getElementById('filterSubject').addEventListener('change', filterData);
+
+function filterData() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const subject = document.getElementById('filterSubject').value;
+
+  const filtered = allData.filter(row => {
+    const name = ((row['FIRST NAME'] || '') + ' ' + (row['LAST NAME'] || '')).toLowerCase();
+    const email = (row['EMAIL'] || '').toLowerCase();
+    const rowSubject = (row['SUBJECT'] || '');
+
+    const matchesQ = !q || name.includes(q) || email.includes(q) || rowSubject.toLowerCase().includes(q);
+    const matchesSubject = !subject || rowSubject === subject;
+
+    return matchesQ && matchesSubject;
+  });
+
+  renderTable(filtered);
+}
+
+// MODAL
+function openModal(index) {
+  const row = allData[index];
+  const date = row['DATE'] ? new Date(row['DATE']).toLocaleDateString('en-PH', {year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-row"><div class="modal-label">Date</div><div class="modal-value">${date}</div></div>
+    <div class="modal-row"><div class="modal-label">Name</div><div class="modal-value">${row['FIRST NAME'] || ''} ${row['LAST NAME'] || ''}</div></div>
+    <div class="modal-row"><div class="modal-label">Email</div><div class="modal-value">${row['EMAIL'] || '—'}</div></div>
+    <div class="modal-row"><div class="modal-label">Phone</div><div class="modal-value">${row['PHONE'] || '—'}</div></div>
+    <div class="modal-row"><div class="modal-label">Subject</div><div class="modal-value"><span class="subject-tag">${row['SUBJECT'] || '—'}</span></div></div>
+    <div class="modal-message-box">${row['MESSAGE'] || '—'}</div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
