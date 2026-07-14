@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — Worthrand Petropower Corporation</title>
+<meta name="description" content="Worthrand Petropower Corporation — Exclusive Flowserve distributor in the Philippines. Browse our complete range of industrial pumps and valves.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #CC0000;
+  --red-dark: #A30000;
+  --navy: #1A1A6E;
+  --navy-dark: #0F0F4A;
+  --off-white: #F8F8F8;
+  --gray: #6B7280;
+  --gray-border: #E5E7EB;
+  --text: #1F2937;
+  --ff-heading: 'Montserrat', sans-serif;
+  --ff-body: 'Open Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--ff-body); background: var(--off-white); color: var(--text); }
+a { text-decoration: none; color: inherit; }
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--navy-dark); border-bottom: 3px solid var(--red);
+  padding: 0 40px; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.nav-brand { display: flex; align-items: center; gap: 14px; }
+.nav-logo-img { height: 46px; width: auto; object-fit: contain; }
+.nav-brand-text .name { font-family: var(--ff-heading); font-weight: 800; font-size: 15px; color: white; letter-spacing: 0.5px; line-height: 1.2; }
+.nav-brand-text .sub { font-size: 10px; color: hsla(0,0%,100%,0.55); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
+.nav-links a { color: hsla(0,0%,100%,0.8); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: 0.2s ease; font-family: var(--ff-heading); }
+.nav-links a:hover { color: white; background: hsla(0,0%,100%,0.1); }
+.nav-links a.active { color: var(--red); }
+.nav-cta { background: var(--red) !important; color: white !important; padding: 9px 20px !important; border-radius: 6px !important; }
+.nav-cta:hover { background: var(--red-dark) !important; }
+
+/* HERO */
+.page-hero {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #1a0000 100%);
+  padding: 120px 40px 70px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: linear-gradient(hsla(0,0%,100%,0.03) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: hsla(0,100%,40%,0.15); border: 1px solid hsla(0,100%,40%,0.3);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 11px; font-weight: 600; color: #80AAFF;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+
+.page-hero h1 {
+  font-family: var(--ff-heading); font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900; color: white; letter-spacing: -1px;
+  margin-bottom: 16px; position: relative; z-index: 1;
+}
+
+.page-hero h1 span { color: var(--red); }
+
+.page-hero p {
+  font-size: 16px; color: hsla(0,0%,100%,0.7);
+  max-width: 560px; margin: 0 auto; line-height: 1.7;
+  position: relative; z-index: 1;
+}
+
+/* MAIN */
+.main { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+
+/* FILTER TABS */
+.filter-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 36px; justify-content: center;
+}
+
+.filter-tab {
+  font-family: var(--ff-heading); font-size: 13px; font-weight: 600;
+  padding: 9px 20px; border-radius: 100px; border: 1px solid var(--gray-border);
+  background: white; color: var(--gray); cursor: pointer; transition: 0.2s ease;
+}
+.filter-tab:hover { border-color: var(--red); color: var(--red); }
+.filter-tab.active { background: var(--red); color: white; border-color: var(--red); }
+
+/* PRODUCTS GRID */
+.products-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+@media (max-width: 900px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .products-grid { grid-template-columns: 1fr; } }
+
+.product-card {
+  background: white; border: 1px solid var(--gray-border);
+  border-radius: 18px; overflow: hidden;
+  transition: 0.25s ease; cursor: pointer;
+  display: flex; flex-direction: column;
+}
+.product-card:hover { box-shadow: 0 14px 35px hsla(0,0%,0%,0.1); transform: translateY(-4px); border-color: var(--red); }
+
+.product-img {
+  height: 140px; display: flex; align-items: center; justify-content: center;
+  font-size: 56px; position: relative;
+}
+
+.product-cat-tag {
+  position: absolute; top: 12px; left: 12px;
+  background: white; color: var(--red);
+  font-family: var(--ff-heading); font-size: 10px; font-weight: 700;
+  padding: 4px 10px; border-radius: 100px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+.product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+
+.product-name {
+  font-family: var(--ff-heading); font-size: 16px; font-weight: 700;
+  color: var(--navy-dark); margin-bottom: 8px; line-height: 1.3;
+}
+
+.product-desc { font-size: 13px; color: var(--gray); line-height: 1.6; flex: 1; margin-bottom: 16px; }
+
+.product-brands { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.brand-chip {
+  background: var(--off-white); border: 1px solid var(--gray-border);
+  border-radius: 6px; padding: 3px 8px; font-size: 10px; font-weight: 600; color: var(--gray);
+}
+
+.btn-details {
+  width: 100%; background: var(--navy-dark); color: white;
+  font-family: var(--ff-heading); font-weight: 700; font-size: 13px;
+  padding: 11px; border-radius: 10px; border: none; cursor: pointer;
+  transition: 0.2s ease;
+}
+.btn-details:hover { background: var(--navy); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: hsla(0,0%,0%,0.6);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; z-index: 600; opacity: 0; visibility: hidden; transition: 0.2s ease;
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal-box {
+  background: white; border-radius: 20px; width: 100%; max-width: 600px;
+  max-height: 88vh; overflow-y: auto;
+  transform: scale(0.95); transition: 0.2s ease;
+}
+.modal-overlay.active .modal-box { transform: scale(1); }
+
+.modal-hero {
+  height: 130px; display: flex; align-items: center; justify-content: center;
+  font-size: 60px; position: relative;
+}
+
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px; background: hsla(0,0%,100%,0.85);
+  border-radius: 50%; border: none; font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.modal-body { padding: 24px 28px 28px; }
+
+.modal-name {
+  font-family: var(--ff-heading); font-size: 22px; font-weight: 800;
+  color: var(--navy-dark); margin-bottom: 6px;
+}
+
+.modal-cat {
+  font-size: 12px; color: var(--red); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
+}
+
+.modal-desc { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 22px; }
+
+.modal-section { margin-bottom: 20px; }
+
+.modal-section-title {
+  font-family: var(--ff-heading); font-size: 12px; font-weight: 700;
+  color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.feature-list li {
+  display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text);
+}
+.feature-list li::before {
+  content: "✓"; width: 18px; height: 18px; background: var(--red);
+  color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+
+.app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.app-item {
+  background: var(--off-white); border: 1px solid var(--gray-border);
+  border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--text); font-weight: 500;
+}
+
+.modal-brands { display: flex; flex-wrap: wrap; gap: 8px; }
+.modal-brand-chip {
+  background: var(--navy-dark); color: white;
+  border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600;
+}
+
+.btn-inquire {
+  width: 100%; background: var(--red); color: white;
+  font-family: var(--ff-heading); font-weight: 700; font-size: 15px;
+  padding: 14px; border-radius: 12px; border: none; cursor: pointer;
+  margin-top: 22px; transition: 0.2s ease;
+}
+.btn-inquire:hover { background: var(--red-dark); }
+
+/* CTA SECTION */
+.cta-section {
+  background: var(--navy-dark); border-radius: 20px;
+  padding: 50px 40px; text-align: center; margin-top: 60px; color: white;
+}
+
+.cta-section h2 { font-family: var(--ff-heading); font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+.cta-section p { font-size: 15px; color: hsla(0,0%,100%,0.7); margin-bottom: 28px; }
+.btn-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--red); color: white;
+  font-family: var(--ff-heading); font-weight: 700; font-size: 15px;
+  padding: 14px 32px; border-radius: 10px; transition: 0.2s ease;
+}
+.btn-cta:hover { background: var(--red-dark); }
+
+/* FOOTER */
+footer { background: var(--navy-dark); color: white; padding: 40px; margin-top: 0; }
+.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-brand { font-family: var(--ff-heading); font-weight: 800; font-size: 16px; }
+.footer-brand span { color: var(--red); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: hsla(0,0%,100%,0.6); transition: 0.2s ease; }
+.footer-links a:hover { color: white; }
+.footer-copy { font-size: 12px; color: hsla(0,0%,100%,0.4); width: 100%; text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid hsla(0,0%,100%,0.1); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <img src="./images/logo.png" alt="WPC Logo" class="nav-logo-img">
+    <div class="nav-brand-text">
+      <div class="name">WORTHRAND</div>
+      <div class="sub">Petropower Corporation</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="./index.html">Home</a></li>
+    <li><a href="./index.html#about">About</a></li>
+    <li><a href="./products.html" class="active">Products</a></li>
+    <li><a href="./index.html#why">Why Us</a></li>
+    <li><a href="./index.html#news">News</a></li>
+    <li><a href="./index.html#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-eyebrow">Flowserve Exclusive Distributor — Philippines</div>
+  <h1>Our <span>Products</span> &amp; Services</h1>
+  <p>World-class industrial pump solutions and valves — backed by Flowserve technology and Worthrand's local expertise.</p>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All Products</button>
+    <button class="filter-tab" data-filter="pumps">Pumps</button>
+    <button class="filter-tab" data-filter="valves">Valves</button>
+    <button class="filter-tab" data-filter="marine">Marine</button>
+    <button class="filter-tab" data-filter="parts">Spare Parts</button>
+  </div>
+
+  <!-- PRODUCTS GRID -->
+  <div class="products-grid" id="productsGrid"></div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Need a Custom Solution?</h2>
+    <p>Our technical team is ready to help you find the right pump or valve for your specific application.</p>
+    <a href="./index.html#contact" class="btn-cta">Get a Free Quotation ›</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">WORTHRAND <span>Petropower</span></div>
+    <div class="footer-links">
+      <a href="./index.html">Home</a>
+      <a href="./index.html#about">About</a>
+      <a href="./index.html#contact">Contact</a>
+      <a href="./admin.html" style="color: hsla(0,0%,100%,0.15);">Admin</a>
+    </div>
+    <div class="footer-copy">© 2026 Worthrand Petropower Corporation. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-hero" id="modalHero">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [
+  {
+    id: 1, cat: 'pumps',
+    emoji: '⚙️', color: 'linear-gradient(135deg, #1A1A6E, #2A2A8E)',
+    name: 'Industrial Process Pumps',
+    catLabel: 'Process Pumps',
+    desc: 'High-performance centrifugal and positive displacement pumps engineered for the most demanding industrial process applications. Designed for continuous, reliable operation in chemical, petrochemical, and refinery environments.',
+    features: [
+      'High-efficiency centrifugal and axial flow designs',
+      'Handles corrosive, abrasive, and high-temperature fluids',
+      'API 610, ANSI/ASME B73.1 compliant',
+      'Wide range of materials — stainless steel, Alloy 20, Hastelloy',
+      'Available in single and multi-stage configurations',
+      'Easy maintenance with back pull-out design'
+    ],
+    applications: ['Oil Refineries', 'Petrochemical Plants', 'Chemical Processing', 'Power Generation', 'Water Treatment', 'Pulp & Paper'],
+    brands: ['Flowserve', 'Byron Jackson', 'Durco', 'Wilson-Snyder', 'ACEC Centrifugal']
+  },
+  {
+    id: 2, cat: 'pumps',
+    emoji: '🛢️', color: 'linear-gradient(135deg, #3A0000, #CC0000)',
+    name: 'Oil & Gas Pumps',
+    catLabel: 'Oil & Gas',
+    desc: 'Specialized pump solutions engineered for upstream, midstream, and downstream oil and gas operations. Built for maximum reliability in the harshest environments — from offshore platforms to onshore refineries.',
+    features: [
+      'API 610 and API 674/675 certified',
+      'Designed for flammable and hazardous fluids',
+      'High pressure and high temperature capability',
+      'Explosion-proof motor options available',
+      'ATEX and IECEx certified configurations',
+      'Subsea and offshore rated variants'
+    ],
+    applications: ['Offshore Platforms', 'Oil Terminals', 'Pipeline Boosting', 'LNG Facilities', 'Gas Processing', 'Crude Oil Transfer'],
+    brands: ['Byron Jackson', 'Pleuger', 'Niigata', 'Ingersoll-Rand', 'Worthington Pacific']
+  },
+  {
+    id: 3, cat: 'pumps',
+    emoji: '🧪', color: 'linear-gradient(135deg, #064E3B, #059669)',
+    name: 'Chemical Pumps',
+    catLabel: 'Chemical',
+    desc: 'Corrosion-resistant pump systems specifically designed for the safe and efficient handling of aggressive chemical fluids including acids, alkalis, solvents, and other hazardous materials.',
+    features: [
+      'Chemical-resistant materials — PVDF, PP, PTFE lined',
+      'Hermetically sealed for zero leakage',
+      'Magnetic drive options for toxic fluids',
+      'ANSI/ASME B73.1 and ISO 2858 standards',
+      'FDA-compliant materials for food-grade applications',
+      'Wide chemical compatibility range'
+    ],
+    applications: ['Chemical Manufacturing', 'Fertilizer Plants', 'Pharmaceutical', 'Food & Beverage', 'Electroplating', 'Wastewater Treatment'],
+    brands: ['Durco', 'Flowserve', 'ACEC Centrifugal', 'United Centrifugal']
+  },
+  {
+    id: 4, cat: 'pumps',
+    emoji: '⚡', color: 'linear-gradient(135deg, #78350F, #D97706)',
+    name: 'Gear Pumps',
+    catLabel: 'Gear Pumps',
+    desc: 'Precision positive displacement gear pump solutions for viscous fluid transfer, lubrication systems, fuel oil handling, and hydraulic applications. Delivers consistent, pulse-free flow across a wide viscosity range.',
+    features: [
+      'External and internal gear pump designs',
+      'Handles viscosities from 1 to 1,000,000 cSt',
+      'Self-priming capability up to 8 meters',
+      'Bi-directional flow options',
+      'Stainless steel and cast iron construction',
+      'Relief valve protection built-in'
+    ],
+    applications: ['Fuel Oil Transfer', 'Lubrication Systems', 'Hydraulic Systems', 'Bitumen Handling', 'Polymer Processing', 'Ink & Paint Manufacturing'],
+    brands: ['Flowserve', 'Sier-Bath', 'Aldrich', 'Stork Engineered Pumps']
+  },
+  {
+    id: 5, cat: 'marine',
+    emoji: '🚢', color: 'linear-gradient(135deg, #0F0F4A, #1A1A6E)',
+    name: 'Marine Pump Supply',
+    catLabel: 'Marine',
+    desc: 'Certified marine-grade pump equipment and spare parts for vessels requiring emergency or routine supply. Ready for urgent delivery to vessels docking at Manila, Clark, and other Philippine ports.',
+    features: [
+      'DNV, ABS, Lloyd\'s Register certified',
+      'Bilge, ballast, fire, and cargo pump solutions',
+      'Seawater and freshwater cooling pumps',
+      'Emergency delivery to all Philippine ports',
+      'OEM certified spare parts available',
+      '24/7 emergency response capability'
+    ],
+    applications: ['Cargo Vessels', 'Tankers', 'Passenger Ships', 'Offshore Supply Vessels', 'Naval Vessels', 'Port of Manila & Clark'],
+    brands: ['Flowserve', 'Byron Jackson', 'Jeumont-Schneider', 'Pleuger']
+  },
+  {
+    id: 6, cat: 'valves',
+    emoji: '🔩', color: 'linear-gradient(135deg, #1A1A6E, #CC0000)',
+    name: 'Industrial Valves',
+    catLabel: 'Valves',
+    desc: 'Complete range of high-quality industrial valves from the Flowserve Control Division — designed for high pressure, high temperature, and critical flow control applications across all industries.',
+    features: [
+      'Globe, Gate, Check, and Angle valve types',
+      'High pressure ratings up to ASME Class 4500',
+      'High temperature service up to 650°C',
+      'Forged and cast steel construction',
+      'API 600, API 602, BS 1873 compliant',
+      'Fugitive emission certified (ISO 15848)'
+    ],
+    applications: ['Power Plants', 'Oil Refineries', 'Chemical Plants', 'Petrochemical Facilities', 'Gas Processing', 'Steam Systems'],
+    brands: ['Edwards', 'Vogt', 'Flowserve Control Division']
+  },
+  {
+    id: 7, cat: 'pumps',
+    emoji: '🌊', color: 'linear-gradient(135deg, #0C4A6E, #0891B2)',
+    name: 'Vertical Turbine Pumps',
+    catLabel: 'Pumps',
+    desc: 'Heavy-duty vertical turbine pumps for deep well, sump, and wet pit applications. Ideal for water supply, irrigation, industrial cooling, and dewatering operations requiring reliable long-term performance.',
+    features: [
+      'Bowl assembly depths from 3m to 300m+',
+      'Enclosed and semi-open impeller designs',
+      'Lineshaft and submersible motor options',
+      'AWWA E101 and API 610 compliant',
+      'Capacities up to 50,000 m³/hr',
+      'Corrosion-resistant material options'
+    ],
+    applications: ['Deep Well Water Supply', 'Irrigation Systems', 'Industrial Cooling', 'Flood Control', 'Mine Dewatering', 'Municipal Water Works'],
+    brands: ['Thompson Kelly & Lewis', 'Flowserve', 'Byron Jackson']
+  },
+  {
+    id: 8, cat: 'pumps',
+    emoji: '⛏️', color: 'linear-gradient(135deg, #292524, #57534E)',
+    name: 'Slurry Pumps',
+    catLabel: 'Pumps',
+    desc: 'Heavy-duty slurry pumps designed for the most abrasive and corrosive applications. Purpose-built for mining, mineral processing, and industrial slurry transfer where standard pumps fail.',
+    features: [
+      'Rubber and hard metal lined wet-end parts',
+      'Designed for up to 70% solids by weight',
+      'Interchangeable wet-end components',
+      'Low NPSH requirements',
+      'Available in horizontal and vertical configurations',
+      'Extended wear life — 3x longer than standard pumps'
+    ],
+    applications: ['Mining Operations', 'Mineral Processing', 'Coal Handling', 'Cement Plants', 'Steel Mills', 'Dredging Operations'],
+    brands: ['Thompson Kelly & Lewis', 'Flowserve', 'United Centrifugal']
+  },
+  {
+    id: 9, cat: 'parts',
+    emoji: '🔧', color: 'linear-gradient(135deg, #1A1A6E, #0F0F4A)',
+    name: 'Spare Parts & After-Sales',
+    catLabel: 'Spare Parts',
+    desc: 'Genuine OEM Flowserve spare parts and comprehensive after-sales technical support. Ensures your pump systems and valves continue operating at peak performance with minimal downtime.',
+    features: [
+      'Genuine OEM Flowserve certified parts',
+      'Impellers, wear rings, mechanical seals',
+      'Bearings, shaft sleeves, and gland packing',
+      'On-site technical service and commissioning',
+      'Pump performance testing and analysis',
+      'Preventive maintenance programs available'
+    ],
+    applications: ['All Pump Types', 'All Valve Types', 'Seal Replacement', 'Bearing Replacement', 'Impeller Replacement', 'Complete Overhaul'],
+    brands: ['Flowserve OEM', 'Byron Jackson OEM', 'Edwards OEM', 'Vogt OEM']
+  }
+];
+
+let activeFilter = 'all';
+
+function renderProducts(filter) {
+  const grid = document.getElementById('productsGrid');
+  const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="openModal(${p.id})">
+      <div class="product-img" style="background: ${p.color};">
+        ${p.emoji}
+        <span class="product-cat-tag">${p.catLabel}</span>
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <p class="product-desc">${p.desc.substring(0, 100)}...</p>
+        <div class="product-brands">
+          ${p.brands.slice(0,3).map(b => `<span class="brand-chip">${b}</span>`).join('')}
+          ${p.brands.length > 3 ? `<span class="brand-chip">+${p.brands.length-3} more</span>` : ''}
+        </div>
+        <button class="btn-details">View Details →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modalHero').style.background = p.color;
+  document.getElementById('modalHero').innerHTML = `
+    <span style="font-size:60px;">${p.emoji}</span>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+  `;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-name">${p.name}</div>
+    <div class="modal-cat">${p.catLabel}</div>
+    <p class="modal-desc">${p.desc}</p>
+    <div class="modal-section">
+      <div class="modal-section-title">Key Features</div>
+      <ul class="feature-list">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Applications</div>
+      <div class="app-grid">${p.applications.map(a => `<div class="app-item">🏭 ${a}</div>`).join('')}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Available Brands</div>
+      <div class="modal-brands">${p.brands.map(b => `<span class="modal-brand-chip">${b}</span>`).join('')}</div>
+    </div>
+    <a href="./index.html#contact" onclick="closeModal()">
+      <button class="btn-inquire">Request a Quote for ${p.name} →</button>
+    </a>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeFilter = tab.dataset.filter;
+    renderProducts(activeFilter);
+  });
+});
+
+renderProducts('all');
+</script>
+</body>
+</html>
