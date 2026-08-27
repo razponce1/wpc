@@ -10,7 +10,7 @@ window.addEventListener('scroll', () => {
 
 // Active nav link on scroll
 window.addEventListener('scroll', () => {
-  const allSections = document.querySelectorAll('section[id]');
+  const allSections = document.querySelectorAll('.company-section.active section[id]');
   const allNavLinks = document.querySelectorAll('.nav-links a');
   let current = '';
   allSections.forEach(section => {
