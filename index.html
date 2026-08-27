@@ -20,6 +20,7 @@
   --red-dark: #A30000;
   --navy: #1A1A6E;
   --navy-dark: #0F0F4A;
+  --wtc-blue: #0B5FA8;
   --white: #FFFFFF;
   --off-white: #F8F8F8;
   --gray: #6B7280;
@@ -42,7 +43,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 10px;
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1001;
@@ -50,36 +51,61 @@ a { text-decoration: none; color: inherit; }
 
 .toggle-label {
   font-family: var(--ff-heading);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  color: hsla(0,0%,100%,0.5);
-  letter-spacing: 0.1em;
+  color: hsla(0,0%,100%,0.4);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-right: 8px;
+}
+
+.company-switch {
+  position: relative;
+  display: flex;
+  background: hsla(0,0%,100%,0.08);
+  border: 1px solid hsla(0,0%,100%,0.15);
+  border-radius: 100px;
+  padding: 3px;
+  width: 140px;
+}
+
+.company-switch-slider {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  border-radius: 100px;
+  background: var(--red);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), background 0.28s ease;
+  z-index: 0;
+}
+
+.company-switch.wtc-active .company-switch-slider {
+  transform: translateX(100%);
+  background: var(--wtc-blue);
 }
 
 .toggle-btn {
+  position: relative;
+  z-index: 1;
+  flex: 1;
   font-family: var(--ff-heading);
   font-size: 12px;
   font-weight: 700;
-  padding: 6px 18px;
+  padding: 6px 0;
   border-radius: 100px;
-  border: 1px solid hsla(0,0%,100%,0.2);
+  border: none;
   background: transparent;
-  color: hsla(0,0%,100%,0.6);
+  color: hsla(0,0%,100%,0.55);
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: color 0.2s ease;
   letter-spacing: 0.05em;
 }
 
 .toggle-btn.active {
-  background: var(--red);
   color: white;
-  border-color: var(--red);
 }
 
 .toggle-btn:not(.active):hover {
-  background: hsla(0,0%,100%,0.1);
   color: white;
 }
 
@@ -374,9 +400,12 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 
 <!-- COMPANY TOGGLE BAR -->
 <div class="company-toggle-bar">
-  <span class="toggle-label">Select Company:</span>
-  <button class="toggle-btn active" id="btnWPC" onclick="switchCompany('wpc')">WPC</button>
-  <button class="toggle-btn" id="btnWTC" onclick="switchCompany('wtc')">WTC</button>
+  <span class="toggle-label">Viewing</span>
+  <div class="company-switch" id="companySwitch">
+    <div class="company-switch-slider"></div>
+    <button class="toggle-btn active" id="btnWPC" onclick="switchCompany('wpc')">WPC</button>
+    <button class="toggle-btn" id="btnWTC" onclick="switchCompany('wtc')">WTC</button>
+  </div>
 </div>
 
 <!-- NAVBAR -->
@@ -1165,6 +1194,7 @@ function switchCompany(company) {
 
   document.getElementById('section-' + company).classList.add('active');
   document.getElementById('btn' + company.toUpperCase()).classList.add('active');
+  document.getElementById('companySwitch').classList.toggle('wtc-active', company === 'wtc');
 
   const suffix = company === 'wtc' ? '-wtc' : '';
 
