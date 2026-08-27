@@ -232,6 +232,10 @@ a { text-decoration: none; color: inherit; }
 /* ===== PRINCIPALS (WTC) ===== */
 .principals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .principal-card { background: white; border: 1px solid var(--gray-border); border-radius: 16px; padding: 24px; transition: 0.25s ease; }
+.gallery-item { display: flex; flex-direction: column; border: 1px solid var(--gray-border); border-radius: 12px; overflow: hidden; text-decoration: none; background: white; transition: 0.2s ease; }
+.gallery-item:hover { transform: translateY(-4px); box-shadow: 0 12px 24px hsla(0,0%,0%,0.1); }
+.gallery-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; display: block; background: var(--off-white); }
+.gallery-item span { padding: 10px 12px; font-family: var(--ff-heading); font-size: 13px; font-weight: 700; color: var(--navy-dark); text-align: center; }
 .principal-card:hover { border-color: var(--red); box-shadow: 0 8px 20px hsla(0,0%,0%,0.08); transform: translateY(-3px); }
 .principal-country { font-size: 10px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
 .principal-name { font-family: var(--ff-heading); font-size: 15px; font-weight: 700; color: var(--navy-dark); margin-bottom: 10px; }
@@ -961,6 +965,56 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
         <div class="principal-name">Truwater Cooling Tower</div>
         <ul class="principal-products"><li>Packaged Cooling Towers</li><li>Field Erected Cooling Towers</li><li>Wet &amp; Dry Slag Handling</li></ul>
       </div>
+      <div class="principal-card fade-in">
+        <div class="principal-country">🇨🇳 China</div>
+        <div class="principal-name">Sizhou Ash Handling</div>
+        <ul class="principal-products"><li>Wet &amp; Dry Slag Handling System</li><li>Pneumatic Ash-Handling System</li></ul>
+      </div>
+      <div class="principal-card fade-in">
+        <div class="principal-country">🇨🇳 China</div>
+        <div class="principal-name">Qingdao Yinghai (QDYH) Anodes</div>
+        <ul class="principal-products"><li>Auxiliary Anodes &amp; Reference Electrodes</li><li>Cathodic Protection Panel &amp; Accessories</li><li>Galvanic Anodes</li></ul>
+      </div>
+      <div class="principal-card fade-in">
+        <div class="principal-country">🇨🇳 China</div>
+        <div class="principal-name">Kolink Valves &amp; Pipe Fittings</div>
+        <ul class="principal-products"><li>Gate, Ball, Butterfly &amp; Check Valves</li><li>Globe &amp; Plug Valves</li></ul>
+      </div>
+      <div class="principal-card fade-in">
+        <div class="principal-country">🇮🇹 Italy</div>
+        <div class="principal-name">Brevini Gearboxes</div>
+        <ul class="principal-products"><li>Industrial Planetary Gearboxes</li><li>Helical &amp; Bevel Helical Gearboxes</li></ul>
+      </div>
+      <div class="principal-card fade-in">
+        <div class="principal-country">🇨🇿 Czech Republic</div>
+        <div class="principal-name">Stransky A Petrzik</div>
+        <ul class="principal-products"><li>Pneumatic Cylinders</li><li>Valves &amp; Accessories</li></ul>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top: 60px;">
+      <div class="section-eyebrow">Catalog Sheets</div>
+      <h2 class="section-title">Product Gallery</h2>
+      <p class="section-desc">Browse product photos and specification sheets from our principals. Click any image to view it full size.</p>
+    </div>
+    <div class="gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;">
+      <a class="gallery-item" href="./images/principals/voith-1.jpg" target="_blank"><img src="./images/principals/voith-1.jpg" alt="Voith Turbo products" loading="lazy"><span>Voith Turbo</span></a>
+      <a class="gallery-item" href="./images/principals/milton-roy-1.jpg" target="_blank"><img src="./images/principals/milton-roy-1.jpg" alt="Milton Roy products" loading="lazy"><span>Milton Roy</span></a>
+      <a class="gallery-item" href="./images/principals/nov-1.jpg" target="_blank"><img src="./images/principals/nov-1.jpg" alt="NOV Fiber Glass System products" loading="lazy"><span>NOV Fiber Glass System</span></a>
+      <a class="gallery-item" href="./images/principals/pleuger-1.jpg" target="_blank"><img src="./images/principals/pleuger-1.jpg" alt="Pleuger products" loading="lazy"><span>Pleuger</span></a>
+      <a class="gallery-item" href="./images/principals/kojo-1.jpg" target="_blank"><img src="./images/principals/kojo-1.jpg" alt="Kojo Valves products" loading="lazy"><span>Kojo Valves</span></a>
+      <a class="gallery-item" href="./images/principals/igawara-1.jpg" target="_blank"><img src="./images/principals/igawara-1.jpg" alt="Igawara products" loading="lazy"><span>Igawara</span></a>
+      <a class="gallery-item" href="./images/principals/tokyo-boeki-1.jpg" target="_blank"><img src="./images/principals/tokyo-boeki-1.jpg" alt="Tokyo Boeki products" loading="lazy"><span>Tokyo Boeki Group</span></a>
+      <a class="gallery-item" href="./images/principals/muhr-1.jpg" target="_blank"><img src="./images/principals/muhr-1.jpg" alt="Muhr products" loading="lazy"><span>Muhr</span></a>
+      <a class="gallery-item" href="./images/principals/thermax-1.jpg" target="_blank"><img src="./images/principals/thermax-1.jpg" alt="Thermax products" loading="lazy"><span>Thermax</span></a>
+      <a class="gallery-item" href="./images/principals/sunrui-1.jpg" target="_blank"><img src="./images/principals/sunrui-1.jpg" alt="Sunrui products" loading="lazy"><span>Sunrui</span></a>
+      <a class="gallery-item" href="./images/principals/piller-1.jpg" target="_blank"><img src="./images/principals/piller-1.jpg" alt="Piller products" loading="lazy"><span>Piller</span></a>
+      <a class="gallery-item" href="./images/principals/truwater-1.jpg" target="_blank"><img src="./images/principals/truwater-1.jpg" alt="Truwater products" loading="lazy"><span>Truwater</span></a>
+      <a class="gallery-item" href="./images/principals/sizhou-1.jpg" target="_blank"><img src="./images/principals/sizhou-1.jpg" alt="Sizhou products" loading="lazy"><span>Sizhou</span></a>
+      <a class="gallery-item" href="./images/principals/qingdao-yinghai-1.jpg" target="_blank"><img src="./images/principals/qingdao-yinghai-1.jpg" alt="Qingdao Yinghai products" loading="lazy"><span>Qingdao Yinghai</span></a>
+      <a class="gallery-item" href="./images/principals/kolink-1.jpg" target="_blank"><img src="./images/principals/kolink-1.jpg" alt="Kolink products" loading="lazy"><span>Kolink</span></a>
+      <a class="gallery-item" href="./images/principals/brevini-1.jpg" target="_blank"><img src="./images/principals/brevini-1.jpg" alt="Brevini products" loading="lazy"><span>Brevini</span></a>
+      <a class="gallery-item" href="./images/principals/stransky-1.jpg" target="_blank"><img src="./images/principals/stransky-1.jpg" alt="Stransky A Petrzik products" loading="lazy"><span>Stransky A Petrzik</span></a>
     </div>
   </div>
 </section>
