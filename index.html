@@ -266,8 +266,11 @@ a { text-decoration: none; color: inherit; }
 .principal-modal-title { font-family: var(--ff-heading); font-weight: 800; font-size: 18px; color: var(--navy-dark); }
 .principal-modal-close { background: none; border: none; font-size: 28px; line-height: 1; cursor: pointer; color: var(--gray); }
 .principal-modal-close:hover { color: var(--red); }
-.principal-modal-body { overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
-.principal-modal-body img { width: 100%; border-radius: 8px; border: 1px solid var(--gray-border); display: block; }
+.principal-modal-body { overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; min-height: 120px; }
+.principal-modal-body img { width: 100%; border-radius: 8px; border: 1px solid var(--gray-border); display: block; background: var(--off-white); }
+.principal-modal-loading { display: flex; align-items: center; justify-content: center; padding: 60px 0; color: var(--gray); font-family: var(--ff-heading); font-size: 13px; gap: 10px; }
+.principal-modal-spinner { width: 18px; height: 18px; border: 2px solid var(--gray-border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .principal-card:hover { border-color: var(--red); box-shadow: 0 8px 20px hsla(0,0%,0%,0.08); transform: translateY(-3px); }
 .principal-country { font-size: 10px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
 .principal-name { font-family: var(--ff-heading); font-size: 15px; font-weight: 700; color: var(--navy-dark); margin-bottom: 10px; }
@@ -1227,16 +1230,25 @@ function openPrincipalGallery(key, count, title, folder) {
   const body = document.getElementById('principalModalBody');
   const titleEl = document.getElementById('principalModalTitle');
   titleEl.textContent = title;
-  body.innerHTML = '';
-  for (let i = 1; i <= count; i++) {
-    const img = document.createElement('img');
-    img.src = `./images/${folder}/${key}-${i}.jpg`;
-    img.alt = title + ' product sheet ' + i;
-    img.loading = 'lazy';
-    body.appendChild(img);
-  }
+  body.innerHTML = '<div class="principal-modal-loading"><span class="principal-modal-spinner"></span> Loading images...</div>';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  let loaded = 0;
+  const imgs = [];
+  for (let i = 1; i <= count; i++) {
+    const img = document.createElement('img');
+    img.alt = title + ' product sheet ' + i;
+    img.onload = img.onerror = () => {
+      loaded++;
+      if (loaded === count) {
+        body.innerHTML = '';
+        imgs.forEach(im => body.appendChild(im));
+      }
+    };
+    img.src = `./images/${folder}/${key}-${i}.jpg`;
+    imgs.push(img);
+  }
 }
 function closePrincipalGallery() {
   document.getElementById('principalModal').classList.remove('open');
