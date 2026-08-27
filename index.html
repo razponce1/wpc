@@ -379,12 +379,12 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
     </div>
   </div>
   <ul class="nav-links">
-    <li><a href="#home" class="active">Home</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="#home" class="active" id="navHomeLink">Home</a></li>
+    <li><a href="#about" id="navAboutLink">About</a></li>
     <li><a href="#services" id="navServicesLink">Services</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    <li><a href="#why" id="navWhyLink">Why Us</a></li>
+    <li><a href="#news" id="navNewsLink">News</a></li>
+    <li><a href="#contact" class="nav-cta" id="navContactLink">Contact Us</a></li>
   </ul>
   <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
@@ -393,12 +393,12 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#why">Why Us</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact Us</a>
+  <a href="#home" id="mobHomeLink">Home</a>
+  <a href="#about" id="mobAboutLink">About</a>
+  <a href="#services" id="mobServicesLink">Services</a>
+  <a href="#why" id="mobWhyLink">Why Us</a>
+  <a href="#news" id="mobNewsLink">News</a>
+  <a href="#contact" id="mobContactLink">Contact Us</a>
 </div>
 
 <!-- ==================== WPC SECTION ==================== -->
@@ -739,7 +739,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 <div class="company-section" id="section-wtc">
 
 <!-- HERO WTC -->
-<section class="hero" id="home">
+<section class="hero" id="home-wtc">
   <div class="hero-bg-pattern"></div>
   <div class="hero-grid-lines"></div>
   <div class="hero-content">
@@ -796,7 +796,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </div>
 
 <!-- ABOUT WTC -->
-<section class="section" id="about" style="background: var(--off-white);">
+<section class="section" id="about-wtc" style="background: var(--off-white);">
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-visual fade-in-left">
@@ -893,7 +893,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </section>
 
 <!-- PRINCIPALS WTC -->
-<section class="section" id="services" style="background: white;">
+<section class="section" id="services-wtc" style="background: white;">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-eyebrow">What We Carry</div>
@@ -966,7 +966,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </section>
 
 <!-- WHY US WTC -->
-<section class="section" id="why" style="background: var(--navy-dark);">
+<section class="section" id="why-wtc" style="background: var(--navy-dark);">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-eyebrow" style="color: hsla(0,0%,100%,0.5);">Why Choose Us</div>
@@ -983,7 +983,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </section>
 
 <!-- NEWS WTC -->
-<section class="section" id="news" style="background: var(--off-white);">
+<section class="section" id="news-wtc" style="background: var(--off-white);">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-eyebrow">Latest Updates</div>
@@ -1007,7 +1007,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </section>
 
 <!-- CONTACT WTC -->
-<section class="section" id="contact" style="background: white;">
+<section class="section" id="contact-wtc" style="background: white;">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-eyebrow">Get In Touch</div>
@@ -1067,7 +1067,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
         <div class="brand-sub">Technology Corporation</div>
         <p>Authorized representative of world-class industrial equipment manufacturers. 100% Filipino-owned corporation serving Philippine industries since 1996.</p>
       </div>
-      <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#services">Products</a></li><li><a href="#news">News</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#home-wtc">Home</a></li><li><a href="#about-wtc">About Us</a></li><li><a href="#services-wtc">Products</a></li><li><a href="#news-wtc">News</a></li><li><a href="#contact-wtc">Contact</a></li></ul></div>
       <div class="footer-col"><h4>Principals</h4><ul><li><a href="#services">Voith Turbo</a></li><li><a href="#services">Milton Roy</a></li><li><a href="#services">Pleuger Industries</a></li><li><a href="#services">Thermax Chemicals</a></li><li><a href="#services">Truwater Cooling Tower</a></li></ul></div>
       <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">0917 891 3124</a></li><li><a href="#">(632) 8 825-3928</a></li><li><a href="#">(632) 8 241-3689</a></li><li><a href="#">Parañaque City, Metro Manila</a></li></ul></div>
     </div>
@@ -1098,6 +1098,8 @@ function switchCompany(company) {
   document.getElementById('section-' + company).classList.add('active');
   document.getElementById('btn' + company.toUpperCase()).classList.add('active');
 
+  const suffix = company === 'wtc' ? '-wtc' : '';
+
   if (company === 'wpc') {
     document.getElementById('navName').textContent = 'WORTHRAND';
     document.getElementById('navSub').textContent = 'Petropower Corporation';
@@ -1107,6 +1109,15 @@ function switchCompany(company) {
     document.getElementById('navSub').textContent = 'Technology Corporation';
     document.getElementById('navServicesLink').textContent = 'Products';
   }
+
+  // Point nav + mobile menu anchors to the correct section for the active company
+  ['home','about','services','why','news','contact'].forEach(sec => {
+    const target = '#' + sec + suffix;
+    const navLink = document.getElementById('nav' + sec.charAt(0).toUpperCase() + sec.slice(1) + 'Link');
+    const mobLink = document.getElementById('mob' + sec.charAt(0).toUpperCase() + sec.slice(1) + 'Link');
+    if (navLink) navLink.setAttribute('href', target);
+    if (mobLink) mobLink.setAttribute('href', target);
+  });
 
   window.scrollTo({top: 0, behavior: 'smooth'});
 
