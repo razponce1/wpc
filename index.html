@@ -638,10 +638,64 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
         </div>
       </div>
     </div>
+
+    <div class="section-header" style="margin-top: 60px;">
+      <div class="section-eyebrow">Ruhrpumpen Line</div>
+      <h2 class="section-title">Product Categories</h2>
+      <p class="section-desc">Click a category to view product photos and specification sheets.</p>
+    </div>
+    <div class="principals-grid">
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('chemical-pumps',2,'Chemical Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Chemical Pumps</div>
+        <ul class="principal-products"><li>CRP / CRP-M</li><li>CPO / CPO-L</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('industrial-pumps',2,'Industrial Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Industrial Pumps</div>
+        <ul class="principal-products"><li>IVP / IVP-CC</li><li>SWP End Suction</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('horizontal-pumps',1,'Horizontal Split Case Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Horizontal Split Case Pumps</div>
+        <ul class="principal-products"><li>HSC / HSD / HSL / HSR / ZW</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('submersible-nonclog',1,'Submersible Non-Clog Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Submersible Non-Clog Pumps</div>
+        <ul class="principal-products"><li>NE Series</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('vertical-multistage',1,'Vertical Multi-Stage Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Vertical Multi-Stage Pumps</div>
+        <ul class="principal-products"><li>VSS Series</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('vertical-turbine',1,'Vertical Turbine Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Vertical Turbine Pumps</div>
+        <ul class="principal-products"><li>VTP Multistage</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('quarrying-pumps',3,'RuhrQuartz Quarrying Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">RuhrQuartz Quarrying Pumps</div>
+        <ul class="principal-products"><li>MPP End Suction Mining Pump</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('fire-pumps',3,'RuhrSafe Fire Pumps &amp; Systems','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">RuhrSafe Fire Pumps &amp; Systems</div>
+        <ul class="principal-products"><li>Pre-Packaged Fire Protection</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('split-case-fire-pumps',2,'Split Case Fire Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Split Case Fire Pumps</div>
+        <ul class="principal-products"><li>Horizontal Single &amp; Two Stage</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('seals',3,'Mechanical Seals','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Mechanical Seals</div>
+        <ul class="principal-products"><li>PSKI &amp; PDKI Component Seals</li><li>Thermosyphon Systems</li><li>CSCA &amp; CDCA Cartridge Seals</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('other-pumps',2,'Other Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Other Pumps</div>
+        <ul class="principal-products"><li>GPA Multistage Centrifugal</li><li>SCE-M Horizontal Single Stage</li></ul>
+      </div>
+      <div class="principal-card fade-in" onclick="openPrincipalGallery('submersible-pumps',4,'Submersible Pumps','wpc-products')" style="cursor:pointer;">
+        <div class="principal-name">Submersible Pumps</div>
+        <ul class="principal-products"><li>Bottom Intake Pumps</li><li>Cavern Pumps</li><li>Flood Pumps</li></ul>
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- SERVICES WPC -->
 <section class="section" id="services" style="background: var(--off-white);">
   <div class="section-inner">
     <div class="section-header">
@@ -1166,8 +1220,9 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznzt6LKktB3JUuuYCUqWqmnN_ZKfBkJsaee3QOxu2xX-Pz6IrjyVkzN2ickiVip20pGw/exec';
 
 // COMPANY TOGGLE
-// PRINCIPAL PRODUCT GALLERY MODAL
-function openPrincipalGallery(key, count, title) {
+// PRINCIPAL / PRODUCT GALLERY MODAL
+function openPrincipalGallery(key, count, title, folder) {
+  folder = folder || 'principals';
   const modal = document.getElementById('principalModal');
   const body = document.getElementById('principalModalBody');
   const titleEl = document.getElementById('principalModalTitle');
@@ -1175,7 +1230,7 @@ function openPrincipalGallery(key, count, title) {
   body.innerHTML = '';
   for (let i = 1; i <= count; i++) {
     const img = document.createElement('img');
-    img.src = `./images/principals/${key}-${i}.jpg`;
+    img.src = `./images/${folder}/${key}-${i}.jpg`;
     img.alt = title + ' product sheet ' + i;
     img.loading = 'lazy';
     body.appendChild(img);
