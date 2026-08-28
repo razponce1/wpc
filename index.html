@@ -36,83 +36,90 @@ html { scroll-behavior: smooth; }
 body { font-family: var(--ff-body); color: var(--text); background: var(--off-white); overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
 
-/* ===== COMPANY TOGGLE ===== */
-.company-toggle-bar {
-  background: #0a0a2e;
-  padding: 8px 40px;
+/* ===== COMPANY SWITCHER (in navbar) ===== */
+.nav-brand {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-brand-chevron {
+  color: var(--gray);
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+  vertical-align: middle;
+}
+
+.nav-brand.open .nav-brand-chevron {
+  transform: rotate(180deg);
+}
+
+.company-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  background: white;
+  border: 1px solid var(--gray-border);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px hsla(0,0%,0%,0.15);
+  padding: 6px;
+  width: 250px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 1100;
+  cursor: default;
+}
+
+.company-dropdown.open {
+  display: flex;
+}
+
+.company-dropdown-item {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1001;
-}
-
-.toggle-label {
-  font-family: var(--ff-heading);
-  font-size: 10px;
-  font-weight: 600;
-  color: hsla(0,0%,100%,0.4);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.company-switch {
-  position: relative;
-  display: flex;
-  background: hsla(0,0%,100%,0.08);
-  border: 1px solid hsla(0,0%,100%,0.15);
-  border-radius: 100px;
-  padding: 3px;
-  width: 140px;
-}
-
-.company-switch-slider {
-  position: absolute;
-  top: 3px; left: 3px;
-  width: calc(50% - 3px);
-  height: calc(100% - 6px);
-  border-radius: 100px;
-  background: var(--red);
-  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), background 0.28s ease;
-  z-index: 0;
-}
-
-.company-switch.wtc-active .company-switch-slider {
-  transform: translateX(100%);
-  background: var(--wtc-blue);
-}
-
-.toggle-btn {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  font-family: var(--ff-heading);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 6px 0;
-  border-radius: 100px;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: none;
   background: transparent;
-  color: hsla(0,0%,100%,0.55);
   cursor: pointer;
-  transition: color 0.2s ease;
-  letter-spacing: 0.05em;
+  text-align: left;
+  font-family: var(--ff-body);
+  color: var(--navy-dark);
+  transition: background 0.15s ease;
 }
 
-.toggle-btn.active {
-  color: white;
+.company-dropdown-item:hover {
+  background: var(--off-white);
 }
 
-.toggle-btn:not(.active):hover {
-  color: white;
+.company-dropdown-item.active {
+  background: var(--off-white);
+}
+
+.company-dropdown-item strong {
+  font-family: var(--ff-heading);
+  font-size: 13px;
+  display: block;
+}
+
+.company-dropdown-item small {
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.company-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* ===== NAVBAR ===== */
 .navbar {
   position: fixed;
-  top: 36px; left: 0; right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 1000;
   background: var(--navy-dark);
   border-bottom: 3px solid var(--red);
@@ -149,7 +156,7 @@ a { text-decoration: none; color: inherit; }
   background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, #1a0000 100%);
   display: flex; align-items: center;
   position: relative; overflow: hidden;
-  padding: 170px 40px 60px;
+  padding: 130px 40px 60px;
 }
 
 .hero-bg-pattern { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, hsla(0,100%,40%,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsla(220,100%,50%,0.1) 0%, transparent 40%); }
@@ -349,7 +356,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 .footer-red { color: var(--red) !important; }
 
 /* ===== MOBILE ===== */
-.mobile-menu { display: none; position: fixed; top: 108px; left: 0; right: 0; background: var(--navy-dark); border-bottom: 3px solid var(--red); padding: 20px; z-index: 999; flex-direction: column; gap: 4px; }
+.mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: var(--navy-dark); border-bottom: 3px solid var(--red); padding: 20px; z-index: 999; flex-direction: column; gap: 4px; }
 .mobile-menu.open { display: flex; }
 .mobile-menu a { color: hsla(0,0%,100%,0.8); font-family: var(--ff-heading); font-size: 14px; font-weight: 500; padding: 12px 16px; border-radius: 8px; transition: 0.2s ease; }
 .mobile-menu a:hover { background: hsla(0,0%,100%,0.08); color: white; }
@@ -402,22 +409,24 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 <body>
 
 <!-- COMPANY TOGGLE BAR -->
-<div class="company-toggle-bar">
-  <span class="toggle-label">Viewing</span>
-  <div class="company-switch" id="companySwitch">
-    <div class="company-switch-slider"></div>
-    <button class="toggle-btn active" id="btnWPC" onclick="switchCompany('wpc')">WPC</button>
-    <button class="toggle-btn" id="btnWTC" onclick="switchCompany('wtc')">WTC</button>
-  </div>
-</div>
-
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <div class="nav-brand">
+  <div class="nav-brand" id="companySwitcherToggle" onclick="toggleCompanyDropdown(event)">
     <img src="./images/logo.png" alt="Logo" class="nav-logo-img" id="navLogo">
     <div class="nav-brand-text">
       <div class="name" id="navName">WORTHRAND</div>
       <div class="sub" id="navSub">Petropower Corporation</div>
+    </div>
+    <svg class="nav-brand-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="company-dropdown" id="companyDropdown">
+      <button class="company-dropdown-item active" id="ddWPC" onclick="switchCompany('wpc'); event.stopPropagation();">
+        <span class="company-dot" style="background: var(--red);"></span>
+        <span><strong>Worthrand Petropower</strong><br><small>WPC</small></span>
+      </button>
+      <button class="company-dropdown-item" id="ddWTC" onclick="switchCompany('wtc'); event.stopPropagation();">
+        <span class="company-dot" style="background: var(--wtc-blue);"></span>
+        <span><strong>Worthwater Technology</strong><br><small>WTC</small></span>
+      </button>
     </div>
   </div>
   <ul class="nav-links">
@@ -1190,13 +1199,27 @@ function closePrincipalGallery() {
   document.body.style.overflow = '';
 }
 
+function toggleCompanyDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('companyDropdown').classList.toggle('open');
+  document.getElementById('companySwitcherToggle').classList.toggle('open');
+}
+function closeCompanyDropdown() {
+  document.getElementById('companyDropdown').classList.remove('open');
+  document.getElementById('companySwitcherToggle').classList.remove('open');
+}
+document.addEventListener('click', (e) => {
+  const toggle = document.getElementById('companySwitcherToggle');
+  if (toggle && !toggle.contains(e.target)) closeCompanyDropdown();
+});
+
 function switchCompany(company) {
   document.querySelectorAll('.company-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.company-dropdown-item').forEach(b => b.classList.remove('active'));
 
   document.getElementById('section-' + company).classList.add('active');
-  document.getElementById('btn' + company.toUpperCase()).classList.add('active');
-  document.getElementById('companySwitch').classList.toggle('wtc-active', company === 'wtc');
+  document.getElementById('dd' + company.toUpperCase()).classList.add('active');
+  closeCompanyDropdown();
 
   const suffix = company === 'wtc' ? '-wtc' : '';
 
