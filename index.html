@@ -1171,24 +1171,16 @@ function openPrincipalGallery(key, count, title, folder) {
   const body = document.getElementById('principalModalBody');
   const titleEl = document.getElementById('principalModalTitle');
   titleEl.textContent = title;
-  body.innerHTML = '<div class="principal-modal-loading"><span class="principal-modal-spinner"></span> Loading images...</div>';
+  body.innerHTML = '';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  let loaded = 0;
-  const imgs = [];
   for (let i = 1; i <= count; i++) {
     const img = document.createElement('img');
     img.alt = title + ' product sheet ' + i;
-    img.onload = img.onerror = () => {
-      loaded++;
-      if (loaded === count) {
-        body.innerHTML = '';
-        imgs.forEach(im => body.appendChild(im));
-      }
-    };
+    img.loading = 'eager';
     img.src = `./images/${folder}/${key}-${i}.jpg`;
-    imgs.push(img);
+    img.onerror = function() { this.style.display = 'none'; };
+    body.appendChild(img);
   }
 }
 function closePrincipalGallery() {
