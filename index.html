@@ -1028,15 +1028,6 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </section>
 
 <!-- PRINCIPAL GALLERY MODAL -->
-<div class="principal-modal" id="principalModal" onclick="if(event.target===this) closePrincipalGallery()">
-  <div class="principal-modal-box">
-    <div class="principal-modal-header">
-      <div class="principal-modal-title" id="principalModalTitle"></div>
-      <button class="principal-modal-close" onclick="closePrincipalGallery()">&times;</button>
-    </div>
-    <div class="principal-modal-body" id="principalModalBody"></div>
-  </div>
-</div>
 
 <!-- WHY US WTC -->
 <section class="section" id="why-wtc" style="background: var(--navy-dark);">
@@ -1153,6 +1144,17 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </footer>
 
 </div><!-- end WTC -->
+
+<!-- PRINCIPAL GALLERY MODAL -->
+<div class="principal-modal" id="principalModal" onclick="if(event.target===this) closePrincipalGallery()">
+  <div class="principal-modal-box">
+    <div class="principal-modal-header">
+      <div class="principal-modal-title" id="principalModalTitle"></div>
+      <button class="principal-modal-close" onclick="closePrincipalGallery()">&times;</button>
+    </div>
+    <div class="principal-modal-body" id="principalModalBody"></div>
+  </div>
+</div>
 
 <!-- FLOATING BUTTONS -->
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
