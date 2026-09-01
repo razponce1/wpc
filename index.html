@@ -128,8 +128,9 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: space-between;
   height: 72px;
-  transition: 0.3s ease;
+  transition: border-color 0.35s ease;
 }
+.navbar.wtc-theme { border-bottom-color: var(--wtc-blue); }
 
 .nav-brand { display: flex; align-items: center; gap: 14px; }
 .nav-logo-img { height: 46px; width: auto; object-fit: contain; flex-shrink: 0; }
@@ -147,8 +148,11 @@ a { text-decoration: none; color: inherit; }
 .hamburger span { width: 24px; height: 2px; background: white; border-radius: 2px; transition: 0.3s ease; }
 
 /* ===== SECTIONS ===== */
-.company-section { display: none; }
-.company-section.active { display: block; }
+.company-section { display: none; opacity: 0; }
+.company-section.active { display: block; opacity: 1; animation: sectionFadeIn 0.45s ease; }
+@keyframes sectionFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.nav-logo-img { transition: opacity 0.2s ease; }
+.nav-logo-img.fading { opacity: 0; }
 
 /* ===== HERO ===== */
 .hero {
@@ -1213,6 +1217,15 @@ document.addEventListener('click', (e) => {
   if (toggle && !toggle.contains(e.target)) closeCompanyDropdown();
 });
 
+function swapLogo(src) {
+  const logo = document.getElementById('navLogo');
+  logo.classList.add('fading');
+  setTimeout(() => {
+    logo.src = src;
+    logo.classList.remove('fading');
+  }, 200);
+}
+
 function switchCompany(company) {
   document.querySelectorAll('.company-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.company-dropdown-item').forEach(b => b.classList.remove('active'));
@@ -1227,12 +1240,14 @@ function switchCompany(company) {
     document.getElementById('navName').textContent = 'WORTHRAND';
     document.getElementById('navSub').textContent = 'Petropower Corporation';
     document.getElementById('navServicesLink').textContent = 'Services';
-    document.getElementById('navLogo').src = './images/logo.png';
+    swapLogo('./images/logo.png');
+    document.getElementById('navbar').classList.remove('wtc-theme');
   } else {
     document.getElementById('navName').textContent = 'WORTHWATER';
     document.getElementById('navSub').textContent = 'Technology Corporation';
     document.getElementById('navServicesLink').textContent = 'Products';
-    document.getElementById('navLogo').src = './images/logo-wtc.png';
+    swapLogo('./images/logo-wtc.png');
+    document.getElementById('navbar').classList.add('wtc-theme');
   }
 
   // Point nav + mobile menu anchors to the correct section for the active company
