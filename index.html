@@ -206,7 +206,12 @@ a { text-decoration: none; color: inherit; }
   padding: 130px 40px 60px;
 }
 
-.hero-bg-pattern { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, hsla(0,100%,40%,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsla(220,100%,50%,0.1) 0%, transparent 40%); }
+.hero-bg-pattern { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, hsla(0,100%,40%,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsla(220,100%,50%,0.1) 0%, transparent 40%); animation: heroAmbient 20s ease-in-out infinite; transition: opacity 0.6s ease; }
+body.wtc-active .hero-bg-pattern { background-image: radial-gradient(circle at 20% 50%, hsla(206,100%,45%,0.16) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsla(0,100%,45%,0.08) 0%, transparent 40%); }
+@keyframes heroAmbient {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(2%, -2%) scale(1.06); }
+}
 .hero-grid-lines { position: absolute; inset: 0; background-image: linear-gradient(hsla(0,0%,100%,0.03) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.03) 1px, transparent 1px); background-size: 60px 60px; }
 
 .hero-content { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
@@ -247,8 +252,40 @@ a { text-decoration: none; color: inherit; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ===== SECTION COMMONS ===== */
-.section { padding: 90px 40px; width: 100%; }
-.section-inner { max-width: 1100px; margin: 0 auto; }
+.section { padding: 90px 40px; width: 100%; position: relative; overflow: hidden; }
+.section-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.section::before, .section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.13;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.6s ease;
+}
+.section::before {
+  width: 420px; height: 420px;
+  background: var(--red);
+  top: -140px; left: -120px;
+  animation: ambientFloat1 24s ease-in-out infinite;
+}
+.section::after {
+  width: 380px; height: 380px;
+  background: var(--navy);
+  bottom: -140px; right: -100px;
+  animation: ambientFloat2 28s ease-in-out infinite;
+}
+body.wtc-active .section::before { background: var(--wtc-blue); }
+body.wtc-active .section::after { background: var(--navy-dark); }
+@keyframes ambientFloat1 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(70px, 50px) scale(1.18); }
+}
+@keyframes ambientFloat2 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(-55px, -35px) scale(1.12); }
+}
 .section-eyebrow { font-family: var(--ff-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
 .section-title { font-family: var(--ff-heading); font-size: clamp(24px, 3.5vw, 38px); font-weight: 800; color: var(--navy-dark); line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 16px; }
 .section-desc { font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 580px; }
@@ -1316,12 +1353,14 @@ function applyCompanySwitch(company) {
     document.getElementById('navServicesLink').textContent = 'Services';
     swapLogo('./images/logo.png');
     document.getElementById('navbar').classList.remove('wtc-theme');
+    document.body.classList.remove('wtc-active');
   } else {
     document.getElementById('navName').textContent = 'WORTHWATER';
     document.getElementById('navSub').textContent = 'Technology Corporation';
     document.getElementById('navServicesLink').textContent = 'Products';
     swapLogo('./images/logo-wtc.png');
     document.getElementById('navbar').classList.add('wtc-theme');
+    document.body.classList.add('wtc-active');
   }
 
   // Point nav + mobile menu anchors to the correct section for the active company
