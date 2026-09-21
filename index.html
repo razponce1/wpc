@@ -32,6 +32,30 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--off-white); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 100px; border: 2px solid var(--off-white); }
+::-webkit-scrollbar-thumb:hover { background: var(--red-dark); }
+body.wtc-active ::-webkit-scrollbar-thumb { background: var(--wtc-blue); }
+body.wtc-active ::-webkit-scrollbar-thumb:hover { background: #084a86; }
+html { scrollbar-color: var(--red) var(--off-white); }
+body.wtc-active { scrollbar-color: var(--wtc-blue) var(--off-white); }
+
+/* ===== SCROLL PROGRESS BAR ===== */
+#scrollProgress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--red), var(--navy-dark));
+  z-index: 1200;
+  transition: width 0.1s ease-out, background 0.4s ease;
+}
+body.wtc-active #scrollProgress {
+  background: linear-gradient(90deg, var(--wtc-blue), var(--navy-dark));
+}
 html { scroll-behavior: smooth; }
 body { font-family: var(--ff-body); color: var(--text); background: var(--off-white); overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
@@ -548,6 +572,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 </style>
 </head>
 <body>
+<div id="scrollProgress"></div>
 
 <!-- COMPANY TOGGLE BAR -->
 <!-- NAVBAR -->
@@ -849,10 +874,10 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
       <p class="section-desc" style="color: hsla(0,0%,100%,0.7);">We are the only authorized Flowserve distributor in the Philippines, giving our clients direct access to world-class industrial pump technology.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card"><div class="why-num">44+</div><div class="why-label">Global Suppliers &amp; Partners</div></div>
-      <div class="why-card"><div class="why-num">751+</div><div class="why-label">Successful Import Shipments</div></div>
-      <div class="why-card"><div class="why-num">#1</div><div class="why-label">Exclusive Flowserve Distributor in PH</div></div>
-      <div class="why-card"><div class="why-num">100%</div><div class="why-label">Filipino-Owned &amp; SEC Registered</div></div>
+      <div class="why-card fade-in"><div class="why-num">44+</div><div class="why-label">Global Suppliers &amp; Partners</div></div>
+      <div class="why-card fade-in"><div class="why-num">751+</div><div class="why-label">Successful Import Shipments</div></div>
+      <div class="why-card fade-in"><div class="why-num">#1</div><div class="why-label">Exclusive Flowserve Distributor in PH</div></div>
+      <div class="why-card fade-in"><div class="why-num">100%</div><div class="why-label">Filipino-Owned &amp; SEC Registered</div></div>
     </div>
   </div>
 </section>
@@ -1252,10 +1277,10 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
       <p class="section-desc" style="color: hsla(0,0%,100%,0.7);">We are the authorized representative of multiple world-class manufacturers, giving our clients access to premium industrial equipment with local engineering support.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card"><div class="why-num">12+</div><div class="why-label">Global Principals Represented</div></div>
-      <div class="why-card"><div class="why-num">1996</div><div class="why-label">Years of Industry Experience</div></div>
-      <div class="why-card"><div class="why-num">100%</div><div class="why-label">Filipino-Owned &amp; SEC Registered</div></div>
-      <div class="why-card"><div class="why-num">12+</div><div class="why-label">Industries Served Nationwide</div></div>
+      <div class="why-card fade-in"><div class="why-num">12+</div><div class="why-label">Global Principals Represented</div></div>
+      <div class="why-card fade-in"><div class="why-num">1996</div><div class="why-label">Years of Industry Experience</div></div>
+      <div class="why-card fade-in"><div class="why-num">100%</div><div class="why-label">Filipino-Owned &amp; SEC Registered</div></div>
+      <div class="why-card fade-in"><div class="why-num">12+</div><div class="why-label">Industries Served Nationwide</div></div>
     </div>
   </div>
 </section>
