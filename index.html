@@ -200,6 +200,75 @@ body.wtc-active .hero-bg-pattern { background-image: radial-gradient(circle at 2
 }
 .hero-grid-lines { position: absolute; inset: 0; background-image: linear-gradient(hsla(0,0%,100%,0.03) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.03) 1px, transparent 1px); background-size: 60px 60px; }
 
+/* ===== BLUEPRINT DRAW-IN ANIMATION ===== */
+.hero-blueprint-wrap {
+  position: absolute;
+  right: -20px;
+  bottom: -10px;
+  width: 460px;
+  max-width: 45vw;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-blueprint {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0.55;
+}
+.bp-line {
+  fill: none;
+  stroke: hsla(0,90%,62%,0.75);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: bpDraw 1.8s cubic-bezier(0.65,0,0.35,1) forwards;
+}
+.bp-dash {
+  fill: none;
+  stroke: hsla(0,0%,100%,0.25);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.bp-dot { fill: hsla(0,90%,62%,0.85); opacity: 0; animation: bpFade 0.4s ease forwards; }
+.bp-label { fill: hsla(0,0%,100%,0.5); font-size: 9px; font-family: var(--ff-heading); letter-spacing: 0.04em; opacity: 0; animation: bpFade 0.5s ease forwards; }
+body.wtc-active .bp-line { stroke: hsla(206,85%,62%,0.8); }
+body.wtc-active .bp-dot { fill: hsla(206,85%,62%,0.85); }
+
+.bp-d1 { animation-delay: 0s; }
+.bp-d2 { animation-delay: 0.25s; }
+.bp-d3 { animation-delay: 0.5s; }
+.bp-d4 { animation-delay: 0.75s; }
+.bp-d5 { animation-delay: 1s; }
+.bp-d6 { animation-delay: 1.2s; }
+.bp-d7 { animation-delay: 1.4s; }
+.bp-fade1 { animation-delay: 1.6s; }
+.bp-fade2 { animation-delay: 1.8s; }
+.bp-fade3 { animation-delay: 2s; }
+
+@keyframes bpDraw { to { stroke-dashoffset: 0; } }
+@keyframes bpFade { to { opacity: 1; } }
+
+.hero-blueprint-sweep {
+  position: absolute;
+  left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(hsla(0,90%,65%,0), hsla(0,90%,65%,0.12), hsla(0,90%,65%,0));
+  animation: bpSweep 4s ease-in-out infinite;
+  animation-delay: 2.2s;
+}
+body.wtc-active .hero-blueprint-sweep {
+  background: linear-gradient(hsla(206,85%,65%,0), hsla(206,85%,65%,0.14), hsla(206,85%,65%,0));
+}
+@keyframes bpSweep {
+  0% { top: -40%; }
+  100% { top: 100%; }
+}
+
 .hero-content { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: hsla(0,100%,40%,0.15); border: 1px solid hsla(204,100%,40%,0.3); border-radius: 100px; padding: 6px 16px; font-size: 11px; font-weight: 600; color: #80AAFF; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
@@ -531,6 +600,38 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 <section class="hero" id="home">
   <div class="hero-bg-pattern"></div>
   <div class="hero-grid-lines"></div>
+<div class="hero-blueprint-wrap">
+  <svg class="hero-blueprint" viewBox="0 0 460 380" xmlns="http://www.w3.org/2000/svg">
+    <path class="bp-line bp-d1" pathLength="1" d="M10,30 L10,10 L30,10" />
+    <path class="bp-line bp-d1" pathLength="1" d="M430,10 L450,10 L450,30" />
+    <path class="bp-line bp-d1" pathLength="1" d="M450,350 L450,370 L430,370" />
+    <path class="bp-line bp-d1" pathLength="1" d="M30,370 L10,370 L10,350" />
+    <line class="bp-dash" x1="20" y1="190" x2="440" y2="190" />
+    <line class="bp-dash" x1="230" y1="20" x2="230" y2="360" />
+    <circle class="bp-line bp-d2" pathLength="1" cx="230" cy="190" r="95" />
+    <circle class="bp-line bp-d3" pathLength="1" cx="230" cy="190" r="48" />
+    <line class="bp-line bp-d4" pathLength="1" x1="230" y1="142" x2="230" y2="238" />
+    <line class="bp-line bp-d4" pathLength="1" x1="182" y1="190" x2="278" y2="190" />
+    <line class="bp-line bp-d4" pathLength="1" x1="196" y1="156" x2="264" y2="224" />
+    <line class="bp-line bp-d4" pathLength="1" x1="264" y1="156" x2="196" y2="224" />
+    <circle class="bp-dot bp-fade1" cx="230" cy="190" r="4" />
+    <line class="bp-line bp-d5" pathLength="1" x1="20" y1="175" x2="150" y2="175" />
+    <line class="bp-line bp-d5" pathLength="1" x1="20" y1="205" x2="150" y2="205" />
+    <line class="bp-line bp-d5" pathLength="1" x1="20" y1="175" x2="20" y2="205" />
+    <line class="bp-line bp-d5" pathLength="1" x1="215" y1="95" x2="215" y2="25" />
+    <line class="bp-line bp-d5" pathLength="1" x1="245" y1="95" x2="245" y2="25" />
+    <line class="bp-line bp-d5" pathLength="1" x1="215" y1="25" x2="245" y2="25" />
+    <path class="bp-line bp-d6" pathLength="1" d="M290,120 A100,100 0 0 1 320,190" />
+    <path class="bp-line bp-d6" pathLength="1" d="M312,178 L320,190 L306,194" />
+    <line class="bp-line bp-d6" pathLength="1" x1="135" y1="330" x2="325" y2="330" />
+    <line class="bp-line bp-d6" pathLength="1" x1="135" y1="322" x2="135" y2="338" />
+    <line class="bp-line bp-d6" pathLength="1" x1="325" y1="322" x2="325" y2="338" />
+    <text class="bp-label bp-fade2" x="195" y="352">&#216;190mm</text>
+    <text class="bp-label bp-fade3" x="30" y="165">INLET</text>
+    <text class="bp-label bp-fade3" x="252" y="18">OUTLET</text>
+  </svg>
+  <div class="hero-blueprint-sweep"></div>
+</div>
   <div class="hero-content">
     <div class="hero-left">
       <div class="hero-eyebrow">Exclusive Flowserve Distributor — Philippines</div>
@@ -860,6 +961,38 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 <section class="hero" id="home-wtc">
   <div class="hero-bg-pattern"></div>
   <div class="hero-grid-lines"></div>
+<div class="hero-blueprint-wrap">
+  <svg class="hero-blueprint" viewBox="0 0 460 380" xmlns="http://www.w3.org/2000/svg">
+    <path class="bp-line bp-d1" pathLength="1" d="M10,30 L10,10 L30,10" />
+    <path class="bp-line bp-d1" pathLength="1" d="M430,10 L450,10 L450,30" />
+    <path class="bp-line bp-d1" pathLength="1" d="M450,350 L450,370 L430,370" />
+    <path class="bp-line bp-d1" pathLength="1" d="M30,370 L10,370 L10,350" />
+    <line class="bp-dash" x1="20" y1="190" x2="440" y2="190" />
+    <line class="bp-dash" x1="230" y1="20" x2="230" y2="360" />
+    <circle class="bp-line bp-d2" pathLength="1" cx="230" cy="190" r="95" />
+    <circle class="bp-line bp-d3" pathLength="1" cx="230" cy="190" r="48" />
+    <line class="bp-line bp-d4" pathLength="1" x1="230" y1="142" x2="230" y2="238" />
+    <line class="bp-line bp-d4" pathLength="1" x1="182" y1="190" x2="278" y2="190" />
+    <line class="bp-line bp-d4" pathLength="1" x1="196" y1="156" x2="264" y2="224" />
+    <line class="bp-line bp-d4" pathLength="1" x1="264" y1="156" x2="196" y2="224" />
+    <circle class="bp-dot bp-fade1" cx="230" cy="190" r="4" />
+    <line class="bp-line bp-d5" pathLength="1" x1="20" y1="175" x2="150" y2="175" />
+    <line class="bp-line bp-d5" pathLength="1" x1="20" y1="205" x2="150" y2="205" />
+    <line class="bp-line bp-d5" pathLength="1" x1="20" y1="175" x2="20" y2="205" />
+    <line class="bp-line bp-d5" pathLength="1" x1="215" y1="95" x2="215" y2="25" />
+    <line class="bp-line bp-d5" pathLength="1" x1="245" y1="95" x2="245" y2="25" />
+    <line class="bp-line bp-d5" pathLength="1" x1="215" y1="25" x2="245" y2="25" />
+    <path class="bp-line bp-d6" pathLength="1" d="M290,120 A100,100 0 0 1 320,190" />
+    <path class="bp-line bp-d6" pathLength="1" d="M312,178 L320,190 L306,194" />
+    <line class="bp-line bp-d6" pathLength="1" x1="135" y1="330" x2="325" y2="330" />
+    <line class="bp-line bp-d6" pathLength="1" x1="135" y1="322" x2="135" y2="338" />
+    <line class="bp-line bp-d6" pathLength="1" x1="325" y1="322" x2="325" y2="338" />
+    <text class="bp-label bp-fade2" x="195" y="352">&#216;190mm</text>
+    <text class="bp-label bp-fade3" x="30" y="165">INLET</text>
+    <text class="bp-label bp-fade3" x="252" y="18">OUTLET</text>
+  </svg>
+  <div class="hero-blueprint-sweep"></div>
+</div>
   <div class="hero-content">
     <div class="hero-left">
       <div class="hero-eyebrow">Authorized Representative — Multiple Principals</div>
