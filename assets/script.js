@@ -92,3 +92,25 @@ function attachTilt(selector) {
 }
 attachTilt('.principal-card');
 attachTilt('.why-card');
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const scrollTop = doc.scrollTop || document.body.scrollTop;
+  const scrollHeight = (doc.scrollHeight || document.body.scrollHeight) - doc.clientHeight;
+  const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  const bar = document.getElementById('scrollProgress');
+  if (bar) bar.style.width = pct + '%';
+});
+
+// Staggered cascade reveal for grid cards
+function applyStagger(selector, gridSelector) {
+  document.querySelectorAll(gridSelector).forEach(grid => {
+    const cards = grid.querySelectorAll(selector);
+    cards.forEach((card, i) => {
+      card.style.transitionDelay = (i * 0.08) + 's';
+    });
+  });
+}
+applyStagger('.principal-card', '.principals-grid');
+applyStagger('.why-card', '.why-grid');
