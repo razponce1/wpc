@@ -161,47 +161,26 @@ a { text-decoration: none; color: inherit; }
 @keyframes sectionFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .nav-logo-img.fading { opacity: 0; }
 
-/* ===== PAGE TRANSITION OVERLAY ===== */
+/* ===== PAGE TRANSITION OVERLAY (circular reveal) ===== */
 .page-transition {
   position: fixed;
   inset: 0;
   z-index: 3000;
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.page-transition-panel {
+.page-transition-circle {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, var(--red), var(--navy-dark));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.76,0,0.24,1);
+  clip-path: circle(0px at var(--ox, 50%) var(--oy, 50%));
+  transition: clip-path 0.65s cubic-bezier(0.65,0,0.35,1);
+  will-change: clip-path;
 }
-.page-transition.wtc .page-transition-panel {
+.page-transition.wtc .page-transition-circle {
   background: linear-gradient(135deg, var(--wtc-blue), var(--navy-dark));
 }
-.page-transition.run .page-transition-panel {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-.page-transition.run.reverse .page-transition-panel {
-  transform-origin: right;
-}
-.page-transition-logo {
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-.page-transition.show-logo .page-transition-logo {
-  opacity: 1;
-  transform: scale(1);
-}
-.page-transition-logo img {
-  height: 64px;
-  width: auto;
-  filter: drop-shadow(0 8px 24px hsla(0,0%,0%,0.3));
+.page-transition.run .page-transition-circle {
+  clip-path: circle(2200px at var(--ox, 50%) var(--oy, 50%));
 }
 
 /* ===== HERO ===== */
@@ -512,11 +491,11 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
     </div>
     <svg class="nav-brand-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <div class="company-dropdown" id="companyDropdown">
-      <button class="company-dropdown-item active" id="ddWPC" onclick="switchCompany('wpc'); event.stopPropagation();">
+      <button class="company-dropdown-item active" id="ddWPC" onclick="switchCompany('wpc', event); event.stopPropagation();">
         <span class="company-dot" style="background: var(--red);"></span>
         <span><strong>Worthrand Petropower</strong><br><small>WPC</small></span>
       </button>
-      <button class="company-dropdown-item" id="ddWTC" onclick="switchCompany('wtc'); event.stopPropagation();">
+      <button class="company-dropdown-item" id="ddWTC" onclick="switchCompany('wtc', event); event.stopPropagation();">
         <span class="company-dot" style="background: var(--wtc-blue);"></span>
         <span><strong>Worthwater Technology</strong><br><small>WTC</small></span>
       </button>
@@ -1249,10 +1228,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 
 <!-- PAGE TRANSITION OVERLAY -->
 <div class="page-transition" id="pageTransition">
-  <div class="page-transition-panel"></div>
-  <div class="page-transition-logo">
-    <img id="transitionLogo" src="./images/logo.png" alt="">
-  </div>
+  <div class="page-transition-circle"></div>
 </div>
 
 <!-- PRINCIPAL GALLERY MODAL -->
@@ -1301,6 +1277,22 @@ function closePrincipalGallery() {
   document.body.style.overflow = '';
 }
 
+// Keyboard navigation for the product gallery modal
+document.addEventListener('keydown', (e) => {
+  const modal = document.getElementById('principalModal');
+  if (!modal.classList.contains('open')) return;
+
+  if (e.key === 'Escape') {
+    closePrincipalGallery();
+  } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    document.getElementById('principalModalBody').scrollBy({ top: 320, behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    document.getElementById('principalModalBody').scrollBy({ top: -320, behavior: 'smooth' });
+  }
+});
+
 function toggleCompanyDropdown(e) {
   e.stopPropagation();
   document.getElementById('companyDropdown').classList.toggle('open');
@@ -1324,25 +1316,21 @@ function swapLogo(src) {
   }, 200);
 }
 
-function switchCompany(company) {
+function switchCompany(company, evt) {
   const overlay = document.getElementById('pageTransition');
-  overlay.classList.remove('reverse');
+  const x = evt ? evt.clientX + 'px' : '50%';
+  const y = evt ? evt.clientY + 'px' : '50%';
+  overlay.style.setProperty('--ox', x);
+  overlay.style.setProperty('--oy', y);
   overlay.classList.toggle('wtc', company === 'wtc');
-  document.getElementById('transitionLogo').src = company === 'wtc' ? './images/logo-wtc.png' : './images/logo.png';
   closeCompanyDropdown();
 
   overlay.classList.add('run');
-  setTimeout(() => overlay.classList.add('show-logo'), 320);
 
   setTimeout(() => {
     applyCompanySwitch(company);
-    overlay.classList.remove('show-logo');
-    overlay.classList.add('reverse');
-    setTimeout(() => {
-      overlay.classList.remove('run');
-      setTimeout(() => overlay.classList.remove('reverse'), 50);
-    }, 500);
-  }, 520);
+    overlay.classList.remove('run');
+  }, 650);
 }
 
 function applyCompanySwitch(company) {
