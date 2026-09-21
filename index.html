@@ -128,12 +128,20 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: space-between;
   height: 72px;
-  transition: border-color 0.35s ease;
+  transition: border-color 0.35s ease, height 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
+.navbar.scrolled {
+  height: 60px;
+  background: hsla(232,60%,10%,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px hsla(0,0%,0%,0.25);
+}
+.navbar.scrolled .nav-logo-img { height: 38px; }
 .navbar.wtc-theme { border-bottom-color: var(--wtc-blue); }
 
 .nav-brand { display: flex; align-items: center; gap: 14px; }
-.nav-logo-img { height: 46px; width: auto; object-fit: contain; flex-shrink: 0; }
+.nav-logo-img { height: 46px; width: auto; object-fit: contain; flex-shrink: 0; transition: opacity 0.2s ease, height 0.3s ease; }
 .nav-brand-text .name { font-family: var(--ff-heading); font-weight: 800; font-size: 15px; color: white; letter-spacing: 0.5px; line-height: 1.2; }
 .nav-brand-text .sub { font-size: 10px; color: hsla(0,0%,100%,0.55); letter-spacing: 0.08em; text-transform: uppercase; }
 
@@ -151,7 +159,6 @@ a { text-decoration: none; color: inherit; }
 .company-section { display: none; opacity: 0; }
 .company-section.active { display: block; opacity: 1; animation: sectionFadeIn 0.45s ease; }
 @keyframes sectionFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.nav-logo-img { transition: opacity 0.2s ease; }
 .nav-logo-img.fading { opacity: 0; }
 
 /* ===== PAGE TRANSITION OVERLAY ===== */
