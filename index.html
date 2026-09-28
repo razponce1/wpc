@@ -222,7 +222,24 @@ body.wtc-active .hero-bg-pattern { background-image: radial-gradient(circle at 2
   0%, 100% { transform: translate(0,0) scale(1); }
   50% { transform: translate(2%, -2%) scale(1.06); }
 }
-.hero-grid-lines { position: absolute; inset: 0; background-image: linear-gradient(hsla(0,0%,100%,0.03) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+.hero-grid-lines { position: absolute; inset: 0; background-image: linear-gradient(hsla(0,0%,100%,0.03) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.03) 1px, transparent 1px); background-size: 60px 60px; opacity: 0; animation: gridFadeIn 1.4s ease forwards; animation-delay: 0.2s; }
+@keyframes gridFadeIn { to { opacity: 1; } }
+
+.hero-grid-glow {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(hsla(0,90%,62%,0.4) 1px, transparent 1px), linear-gradient(90deg, hsla(0,90%,62%,0.4) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), white, transparent 70%);
+  mask-image: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), white, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.hero:hover .hero-grid-glow { opacity: 1; }
+body.wtc-active .hero-grid-glow {
+  background-image: linear-gradient(hsla(206,85%,62%,0.4) 1px, transparent 1px), linear-gradient(90deg, hsla(206,85%,62%,0.4) 1px, transparent 1px);
+}
 
 /* ===== BLUEPRINT DRAW-IN ANIMATION ===== */
 .hero-blueprint-wrap {
@@ -323,12 +340,93 @@ body.wtc-active .hero-blueprint-sweep {
 .hero-badge-text .b-title { font-family: var(--ff-heading); font-size: 13px; font-weight: 700; color: white; }
 .hero-badge-text .b-sub { font-size: 11px; color: hsla(0,0%,100%,0.55); margin-top: 2px; }
 
-/* ===== TICKER ===== */
-.ticker { background: var(--red); padding: 12px 0; overflow: hidden; white-space: nowrap; }
-.ticker-inner { display: inline-flex; gap: 60px; animation: ticker 25s linear infinite; }
-.ticker-item { font-family: var(--ff-heading); font-size: 12px; font-weight: 700; color: white; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
-.ticker-item::before { content: "◆"; font-size: 8px; opacity: 0.6; }
+/* ===== TICKER (marquee) ===== */
+.ticker { background: var(--red); padding: 16px 0; overflow: hidden; white-space: nowrap; transition: background 0.4s ease; }
+.ticker-wtc { background: var(--wtc-blue); }
+.ticker-inner { display: inline-flex; animation: ticker 32s linear infinite; }
+.ticker:hover .ticker-inner { animation-play-state: paused; }
+.ticker-item { font-family: var(--ff-heading); font-size: 15px; font-weight: 800; color: white; letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; padding-right: 60px; }
+.ticker-item::before { content: "\25C6"; font-size: 9px; opacity: 0.6; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ===== SCROLL-DRIVEN CARD FAN ===== */
+.fan-section {
+  position: relative;
+  height: 260vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, hsla(0,90%,45%,0.22), transparent 60%),
+    linear-gradient(180deg, var(--navy-dark), #070726);
+}
+.fan-section.fan-wtc {
+  background:
+    radial-gradient(ellipse at 50% 0%, hsla(206,85%,45%,0.26), transparent 60%),
+    linear-gradient(180deg, var(--navy-dark), #070726);
+}
+.fan-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 90px 20px 30px;
+}
+.fan-bg-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(hsla(0,0%,100%,0.05) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
+  pointer-events: none;
+}
+.fan-heading { position: relative; z-index: 2; text-align: center; margin-bottom: 26px; }
+.fan-eyebrow { font-family: var(--ff-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+.fan-wtc .fan-eyebrow { color: #4aa3ea; }
+.fan-title { font-family: var(--ff-heading); font-size: clamp(26px, 4.2vw, 52px); font-weight: 800; color: white; line-height: 1.1; letter-spacing: -0.5px; }
+.fan-title span { color: var(--red); }
+.fan-wtc .fan-title span { color: #4aa3ea; }
+.fan-stage {
+  --w: clamp(130px, 18vw, 250px);
+  position: relative;
+  width: 100%;
+  height: calc(var(--w) * 1.36 + 50px);
+  perspective: 1400px;
+  z-index: 1;
+}
+.fan-card {
+  position: absolute;
+  left: 50%; top: 0;
+  width: var(--w);
+  height: calc(var(--w) * 1.36);
+  margin-left: calc(var(--w) / -2);
+  border-radius: 22px;
+  overflow: hidden;
+  background: white;
+  border: 1px solid hsla(0,0%,100%,0.14);
+  box-shadow: 0 24px 50px hsla(0,0%,0%,0.45);
+  cursor: pointer;
+  transform-origin: 50% 115%;
+  will-change: transform;
+  transition: box-shadow 0.25s ease;
+}
+.fan-card:hover { box-shadow: 0 28px 60px hsla(0,90%,50%,0.4); }
+.fan-wtc .fan-card:hover { box-shadow: 0 28px 60px hsla(206,85%,50%,0.45); }
+.fan-card img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.fan-label {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 30px 12px 12px;
+  background: linear-gradient(transparent, hsla(0,0%,0%,0.8));
+  color: white; text-align: center;
+  font-family: var(--ff-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.fan-hint { position: relative; z-index: 2; margin-top: 8px; font-family: var(--ff-heading); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: hsla(0,0%,100%,0.55); }
+@media (prefers-reduced-motion: reduce) {
+  .fan-section { height: auto; }
+  .fan-sticky { position: relative; height: auto; min-height: 100vh; }
+  .ticker-inner { animation: none; }
+}
 
 /* ===== SECTION COMMONS ===== */
 .section { padding: 90px 40px; width: 100%; position: relative; overflow: hidden; }
@@ -625,6 +723,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 <section class="hero" id="home">
   <div class="hero-bg-pattern"></div>
   <div class="hero-grid-lines"></div>
+  <div class="hero-grid-glow"></div>
 <div class="hero-blueprint-wrap">
   <svg class="hero-blueprint" viewBox="0 0 460 380" xmlns="http://www.w3.org/2000/svg">
     <path class="bp-line bp-d1" pathLength="1" d="M10,30 L10,10 L30,10" />
@@ -707,6 +806,40 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
     <span class="ticker-item">Pump Maintenance</span>
     <span class="ticker-item">Technical Support</span>
     <span class="ticker-item">Spare Parts Supply</span>
+  </div>
+</div>
+
+<!-- CARD FAN WPC -->
+<div class="fan-section ">
+  <div class="fan-sticky">
+    <div class="fan-bg-grid"></div>
+    <div class="fan-heading">
+      <div class="fan-eyebrow">Product Lines</div>
+      <h2 class="fan-title">Pumps built for <span>every industry</span></h2>
+    </div>
+    <div class="fan-stage">
+      <div class="fan-card" onclick="openPrincipalGallery('horizontal-pumps',1,'Horizontal Split Case Pumps','wpc-products')">
+        <img src="./images/wpc-products/horizontal-pumps-1.jpg" alt="Water &amp; Waste Pumps" loading="lazy">
+        <span class="fan-label">Water &amp; Waste Pumps</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('chemical-pumps',2,'Chemical Pumps','wpc-products')">
+        <img src="./images/wpc-products/chemical-pumps-1.jpg" alt="Chemical Pumps" loading="lazy">
+        <span class="fan-label">Chemical Pumps</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('fire-pumps',3,'RuhrSafe Fire Pumps &amp; Systems','wpc-products')">
+        <img src="./images/wpc-products/fire-pumps-1.jpg" alt="Fire Pumps &amp; Systems" loading="lazy">
+        <span class="fan-label">Fire Pumps &amp; Systems</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('industrial-pumps',2,'Industrial Pumps','wpc-products')">
+        <img src="./images/wpc-products/industrial-pumps-1.jpg" alt="Industrial Pumps" loading="lazy">
+        <span class="fan-label">Industrial Pumps</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('seals',3,'Mechanical Seals','wpc-products')">
+        <img src="./images/wpc-products/seals-1.jpg" alt="Mechanical Seals" loading="lazy">
+        <span class="fan-label">Mechanical Seals</span>
+      </div>
+    </div>
+    <div class="fan-hint">Scroll to fan out &middot; Click a card to explore</div>
   </div>
 </div>
 
@@ -986,6 +1119,7 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 <section class="hero" id="home-wtc">
   <div class="hero-bg-pattern"></div>
   <div class="hero-grid-lines"></div>
+  <div class="hero-grid-glow"></div>
 <div class="hero-blueprint-wrap">
   <svg class="hero-blueprint" viewBox="0 0 460 380" xmlns="http://www.w3.org/2000/svg">
     <path class="bp-line bp-d1" pathLength="1" d="M10,30 L10,10 L30,10" />
@@ -1068,6 +1202,70 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
     <span class="ticker-item">Fiberglass Pipes</span>
     <span class="ticker-item">Industrial Valves</span>
     <span class="ticker-item">Water Treatment Systems</span>
+  </div>
+</div>
+
+<!-- TICKER WTC -->
+<div class="ticker ticker-wtc">
+  <div class="ticker-inner">
+    <span class="ticker-item">Hydrocarbon / Oil Refinery</span>
+    <span class="ticker-item">Power Utilities</span>
+    <span class="ticker-item">Geothermal</span>
+    <span class="ticker-item">Mining</span>
+    <span class="ticker-item">Sugar</span>
+    <span class="ticker-item">Chemicals</span>
+    <span class="ticker-item">EPC Contractors</span>
+    <span class="ticker-item">Cement</span>
+    <span class="ticker-item">Food &amp; Beverages</span>
+    <span class="ticker-item">Petrochemicals</span>
+    <span class="ticker-item">Steel</span>
+    <span class="ticker-item">Alcohol Distilleries</span>
+    <span class="ticker-item">Hydrocarbon / Oil Refinery</span>
+    <span class="ticker-item">Power Utilities</span>
+    <span class="ticker-item">Geothermal</span>
+    <span class="ticker-item">Mining</span>
+    <span class="ticker-item">Sugar</span>
+    <span class="ticker-item">Chemicals</span>
+    <span class="ticker-item">EPC Contractors</span>
+    <span class="ticker-item">Cement</span>
+    <span class="ticker-item">Food &amp; Beverages</span>
+    <span class="ticker-item">Petrochemicals</span>
+    <span class="ticker-item">Steel</span>
+    <span class="ticker-item">Alcohol Distilleries</span>
+  </div>
+</div>
+
+<!-- CARD FAN WTC -->
+<div class="fan-section fan-wtc">
+  <div class="fan-sticky">
+    <div class="fan-bg-grid"></div>
+    <div class="fan-heading">
+      <div class="fan-eyebrow">Our Principals</div>
+      <h2 class="fan-title">World-class brands, <span>one trusted partner</span></h2>
+    </div>
+    <div class="fan-stage">
+      <div class="fan-card" onclick="openPrincipalGallery('voith',1,'Voith Turbo')">
+        <img src="./images/principals/voith-1.jpg" alt="Voith Turbo" loading="lazy">
+        <span class="fan-label">Voith Turbo</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('milton-roy',1,'Milton Roy Company')">
+        <img src="./images/principals/milton-roy-1.jpg" alt="Milton Roy" loading="lazy">
+        <span class="fan-label">Milton Roy</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('pleuger',1,'Pleuger Industries')">
+        <img src="./images/principals/pleuger-1.jpg" alt="Pleuger" loading="lazy">
+        <span class="fan-label">Pleuger</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('kojo',1,'Kojo Valves')">
+        <img src="./images/principals/kojo-1.jpg" alt="Kojo Valves" loading="lazy">
+        <span class="fan-label">Kojo Valves</span>
+      </div>
+      <div class="fan-card" onclick="openPrincipalGallery('tokyo-boeki',1,'Tokyo Boeki / Niigata')">
+        <img src="./images/principals/tokyo-boeki-1.jpg" alt="Tokyo Boeki" loading="lazy">
+        <span class="fan-label">Tokyo Boeki</span>
+      </div>
+    </div>
+    <div class="fan-hint">Scroll to fan out &middot; Click a card to explore</div>
   </div>
 </div>
 
@@ -1527,6 +1725,8 @@ function applyCompanySwitch(company) {
 
   window.scrollTo({top: 0, behavior: 'instant'});
 
+  if (window.updateFans) window.updateFans();
+
   // Re-run scroll animations for new section
   setTimeout(() => {
     document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
@@ -1601,6 +1801,55 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => observer.observe(el));
+
+// ===== SCROLL-DRIVEN CARD FAN =====
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fans = Array.from(document.querySelectorAll('.fan-section'));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function layout(fan) {
+    const cards = fan.querySelectorAll('.fan-card');
+    const n = cards.length;
+    if (!n) return;
+    const vh = window.innerHeight;
+    let p = 0;
+    if (reduce) p = 1;
+    else if (fan.offsetHeight > 0) {
+      const rect = fan.getBoundingClientRect();
+      const total = fan.offsetHeight - vh;
+      p = Math.max(0, Math.min(1, (-rect.top + vh * 0.25) / (total * 0.8)));
+    }
+    const e = ease(p);
+    const w = cards[0].offsetWidth || 200;
+    const small = window.innerWidth < 700;
+    const rowStep = w * (small ? 1.06 : 1.12);
+    const fanStep = w * (small ? 0.34 : 0.42);
+    cards.forEach((card, i) => {
+      const t = i - (n - 1) / 2;
+      const at = Math.abs(t);
+      const x = lerp(t * rowStep, t * fanStep, e);
+      const y = lerp(0, at * at * w * 0.045, e);
+      const rY = lerp(-t * 16, 0, e);
+      const rZ = lerp(0, t * 11, e);
+      const sc = lerp(1 - at * 0.05, 1 + (at === 0 ? 0.08 : 0), e);
+      card.style.transform = `translate3d(${x}px, ${y}px, 0) rotateY(${rY}deg) rotateZ(${rZ}deg) scale(${sc})`;
+      card.style.zIndex = 10 - Math.round(at);
+    });
+    const hint = fan.querySelector('.fan-hint');
+    if (hint) hint.style.opacity = String(1 - e);
+  }
+
+  let ticking = false;
+  function update() { fans.forEach(layout); ticking = false; }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('load', update);
+  window.updateFans = update;
+  update();
+})();
 </script>
 </body>
 </html>
