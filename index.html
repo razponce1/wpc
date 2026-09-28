@@ -428,6 +428,57 @@ body.wtc-active .hero-blueprint-sweep {
   .ticker-inner { animation: none; }
 }
 
+/* ===== PRELOADER ===== */
+#preloader { position: fixed; inset: 0; z-index: 5000; animation: plFailsafe 0.01s linear 5s forwards; }
+@keyframes plFailsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+.pl-panel { position: absolute; left: 0; right: 0; height: 50.3%; background: linear-gradient(135deg, var(--navy-dark), #070726); transition: transform 0.85s cubic-bezier(0.76,0,0.24,1); }
+.pl-top { top: 0; }
+.pl-bottom { bottom: 0; }
+.pl-top::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
+.pl-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; transition: opacity 0.35s ease, transform 0.5s ease; }
+.pl-center img { height: 72px; width: auto; animation: plPulse 1.4s ease-in-out infinite; }
+@keyframes plPulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.06); opacity: 1; } }
+.pl-bar { width: 220px; height: 3px; background: hsla(0,0%,100%,0.12); border-radius: 100px; overflow: hidden; }
+.pl-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--red), #ff7a7a); animation: plFill 1.4s cubic-bezier(0.65,0,0.35,1) forwards; }
+@keyframes plFill { to { width: 100%; } }
+.pl-text { font-family: var(--ff-heading); font-size: 11px; letter-spacing: 0.32em; color: hsla(0,0%,100%,0.5); text-transform: uppercase; }
+#preloader.done { pointer-events: none; }
+#preloader.done .pl-center { opacity: 0; transform: scale(1.08); }
+#preloader.done .pl-top { transform: translateY(-101%); }
+#preloader.done .pl-bottom { transform: translateY(101%); }
+body.preloading .hero * { animation-play-state: paused !important; }
+
+/* ===== HERO INTRO (split headline) ===== */
+.hero .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.hero .wi { display: inline-block; }
+.hero.split-armed:not(.play) .wi { transform: translateY(118%); }
+.hero.split-armed.play .wi { transition: transform 0.95s cubic-bezier(0.16,1,0.3,1); transition-delay: calc(var(--i) * 85ms + 100ms); transform: none; }
+.hero.split-armed:not(.play) .hero-eyebrow,
+.hero.split-armed:not(.play) .hero-desc,
+.hero.split-armed:not(.play) .hero-actions,
+.hero.split-armed:not(.play) .hero-visual { opacity: 0; transform: translateY(28px); }
+.hero.split-armed.play .hero-eyebrow,
+.hero.split-armed.play .hero-desc,
+.hero.split-armed.play .hero-actions,
+.hero.split-armed.play .hero-visual { transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.hero.split-armed.play .hero-eyebrow { transition-delay: 0s; }
+.hero.split-armed.play .hero-desc { transition-delay: 0.55s; }
+.hero.split-armed.play .hero-actions { transition-delay: 0.7s; }
+.hero.split-armed.play .hero-visual { transition-delay: 0.85s; }
+.btn-primary, .btn-outline { will-change: transform; }
+
+/* ===== STATEMENT (word-by-word scroll reveal) ===== */
+.statement-section { background: var(--off-white); padding: 130px 40px; position: relative; }
+.statement-inner { max-width: 1000px; margin: 0 auto; }
+.statement-eyebrow { font-family: var(--ff-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 22px; }
+.statement-wtc .statement-eyebrow { color: var(--wtc-blue); }
+.statement-text { font-family: var(--ff-heading); font-size: clamp(26px, 4.2vw, 54px); font-weight: 800; line-height: 1.18; letter-spacing: -0.5px; color: var(--navy-dark); }
+.statement-text .sw { opacity: 0.13; transition: opacity 0.35s ease, color 0.35s ease; }
+.statement-text .sw.on { opacity: 1; }
+.statement-text .sw.hl.on { color: var(--red); }
+.statement-wtc .statement-text .sw.hl.on { color: var(--wtc-blue); }
+@media (prefers-reduced-motion: reduce) { #preloader { display: none; } .statement-text .sw { opacity: 1; } }
+
 /* ===== SECTION COMMONS ===== */
 .section { padding: 90px 40px; width: 100%; position: relative; overflow: hidden; }
 .section-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
@@ -669,8 +720,20 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
 }
 </style>
 </head>
-<body>
+<body class="preloading">
 <div id="scrollProgress"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pl-panel pl-top"></div>
+  <div class="pl-panel pl-bottom"></div>
+  <div class="pl-center">
+    <img src="./images/logo.png" alt="">
+    <div class="pl-bar"><span></span></div>
+    <div class="pl-text">Worthrand &middot; Worthwater</div>
+  </div>
+</div>
+<script>setTimeout(function(){var p=document.getElementById('preloader');if(p){p.classList.add('done');}document.body.classList.remove('preloading');},5200);</script>
 
 <!-- COMPANY TOGGLE BAR -->
 <!-- NAVBAR -->
@@ -840,6 +903,14 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
       </div>
     </div>
     <div class="fan-hint">Scroll to fan out &middot; Click a card to explore</div>
+  </div>
+</div>
+
+<!-- STATEMENT WPC -->
+<div class="statement-section">
+  <div class="statement-inner">
+    <div class="statement-eyebrow">Who We Are</div>
+    <p class="statement-text" data-statement>We are a 100% Filipino-owned company and the <em>exclusive Flowserve pump distributor</em> in the Philippines, supplying <em>pumps, spare parts and technical support</em> to Philippine industry.</p>
   </div>
 </div>
 
@@ -1269,6 +1340,14 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
   </div>
 </div>
 
+<!-- STATEMENT WTC -->
+<div class="statement-section statement-wtc">
+  <div class="statement-inner">
+    <div class="statement-eyebrow">Our Vision</div>
+    <p class="statement-text" data-statement>Our vision is to become <em>one of the most successful trading and engineering firms</em> in the Philippines, built on <em>professionalism and business ethics</em>.</p>
+  </div>
+</div>
+
 <!-- ABOUT WTC -->
 <section class="section" id="about-wtc" style="background: var(--off-white);">
   <div class="section-inner">
@@ -1686,6 +1765,7 @@ function switchCompany(company, evt) {
   setTimeout(() => {
     applyCompanySwitch(company);
     overlay.classList.remove('run');
+    setTimeout(() => { if (window.playHero) window.playHero(company); }, 200);
   }, 650);
 }
 
@@ -1725,7 +1805,9 @@ function applyCompanySwitch(company) {
 
   window.scrollTo({top: 0, behavior: 'instant'});
 
+  if (window.resetHeroes) window.resetHeroes();
   if (window.updateFans) window.updateFans();
+  if (window.updateScrollFx) window.updateScrollFx();
 
   // Re-run scroll animations for new section
   setTimeout(() => {
@@ -1849,6 +1931,129 @@ document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el 
   window.addEventListener('load', update);
   window.updateFans = update;
   update();
+})();
+
+// ===== PRELOADER / HERO INTRO / STATEMENT / CURVE REVEAL / MAGNETIC =====
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroes = Array.from(document.querySelectorAll('.hero'));
+
+  // Split hero headline into words (masked slide-up)
+  function splitWords(el) {
+    let idx = 0;
+    (function walk(node) {
+      Array.from(node.childNodes).forEach(ch => {
+        if (ch.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          ch.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const w = document.createElement('span'); w.className = 'w';
+            const wi = document.createElement('span'); wi.className = 'wi';
+            wi.style.setProperty('--i', idx++); wi.textContent = part;
+            w.appendChild(wi); frag.appendChild(w);
+          });
+          ch.replaceWith(frag);
+        } else if (ch.nodeType === 1) walk(ch);
+      });
+    })(el);
+  }
+  heroes.forEach(h => {
+    const t = h.querySelector('.hero-title');
+    if (t) { t.setAttribute('aria-label', t.textContent.trim()); splitWords(t); h.classList.add('split-armed'); }
+  });
+
+  window.playHero = function (company) {
+    const hero = document.getElementById(company === 'wtc' ? 'home-wtc' : 'home');
+    heroes.forEach(h => h.classList.remove('play'));
+    if (hero) { void hero.offsetWidth; hero.classList.add('play'); }
+  };
+  window.resetHeroes = function () { heroes.forEach(h => h.classList.remove('play')); };
+  setTimeout(() => { if (!heroes.some(h => h.classList.contains('play'))) window.playHero('wpc'); }, 6500);
+
+  // Preloader
+  const pre = document.getElementById('preloader');
+  const t0 = performance.now();
+  let finished = false;
+  function finish() {
+    if (finished) return; finished = true;
+    if (pre) pre.classList.add('done');
+    document.body.classList.remove('preloading');
+    setTimeout(() => window.playHero('wpc'), reduce ? 0 : 450);
+    setTimeout(() => { if (pre) pre.remove(); }, 1300);
+  }
+  function ready() { setTimeout(finish, Math.max(0, (reduce ? 0 : 1500) - (performance.now() - t0))); }
+  if (document.readyState === 'complete') ready(); else window.addEventListener('load', ready);
+  setTimeout(finish, 4500);
+
+  // Statement: words light up with scroll
+  const statements = Array.from(document.querySelectorAll('[data-statement]')).map(el => {
+    const words = [];
+    (function walk(node, hl) {
+      Array.from(node.childNodes).forEach(ch => {
+        if (ch.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          ch.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const sp = document.createElement('span');
+            sp.className = 'sw' + (hl ? ' hl' : ''); sp.textContent = part;
+            words.push(sp); frag.appendChild(sp);
+          });
+          ch.replaceWith(frag);
+        } else if (ch.nodeType === 1) walk(ch, hl || ch.tagName === 'EM');
+      });
+    })(el, false);
+    return { el, words };
+  });
+  function updateStatements() {
+    const vh = window.innerHeight;
+    statements.forEach(({ el, words }) => {
+      if (!el.offsetHeight) return;
+      const r = el.getBoundingClientRect();
+      const p = reduce ? 1 : Math.max(0, Math.min(1, (vh * 0.8 - r.top) / (vh * 0.5 + r.height * 0.3)));
+      const n = words.length;
+      words.forEach((w, i) => w.classList.toggle('on', i < p * n * 1.02));
+    });
+  }
+
+  // Sections expand from a rounded inset card to full width as they scroll in
+  const curveEls = Array.from(document.querySelectorAll('.company-section .section, .statement-section'));
+  function updateCurves() {
+    if (reduce) return;
+    const vh = window.innerHeight;
+    curveEls.forEach(el => {
+      if (!el.offsetHeight) return;
+      const r = el.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.55)));
+      const e = 1 - Math.pow(1 - p, 3);
+      if (e >= 0.999) { if (el.style.clipPath) el.style.clipPath = ''; return; }
+      const inset = (1 - e) * 3.5, rad = (1 - e) * 64;
+      el.style.clipPath = `inset(0 ${inset}% 0 ${inset}% round ${rad}px ${rad}px 0 0)`;
+    });
+  }
+
+  let ticking = false;
+  function updateAll() { updateStatements(); updateCurves(); ticking = false; }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(updateAll); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('load', updateAll);
+  window.updateScrollFx = updateAll;
+  updateAll();
+
+  // Magnetic buttons
+  if (!reduce) {
+    document.querySelectorAll('.btn-primary, .btn-outline').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width / 2)) * 0.25;
+        const y = (e.clientY - (r.top + r.height / 2)) * 0.35;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+  }
 })();
 </script>
 </body>
