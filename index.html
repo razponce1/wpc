@@ -352,7 +352,7 @@ body.wtc-active .hero-blueprint-sweep {
 /* ===== SCROLL-DRIVEN CARD FAN ===== */
 .fan-section {
   position: relative;
-  height: 260vh;
+  height: 165vh;
   background:
     radial-gradient(ellipse at 50% 0%, hsla(0,90%,45%,0.22), transparent 60%),
     linear-gradient(180deg, var(--navy-dark), #070726);
@@ -479,6 +479,14 @@ body.preloading .hero * { animation-play-state: paused !important; }
 .statement-text .sw.hl.on { color: var(--red); }
 .statement-wtc .statement-text .sw.hl.on { color: var(--wtc-blue); }
 @media (prefers-reduced-motion: reduce) { #preloader { display: none; } .statement-text .sw { opacity: 1; } }
+
+/* ===== CARD GLARE ===== */
+.principal-card, .why-card { position: relative; overflow: hidden; }
+.principal-card::after, .why-card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; }
+.principal-card::after { background: radial-gradient(circle 190px at var(--gx, 50%) var(--gy, 50%), hsla(0,90%,58%,0.17), transparent 70%); }
+.why-card::after { background: radial-gradient(circle 190px at var(--gx, 50%) var(--gy, 50%), hsla(0,0%,100%,0.16), transparent 70%); }
+body.wtc-active .principal-card::after { background: radial-gradient(circle 190px at var(--gx, 50%) var(--gy, 50%), hsla(206,85%,55%,0.2), transparent 70%); }
+.principal-card:hover::after, .why-card:hover::after { opacity: 1; }
 
 /* ===== SECTION COMMONS ===== */
 .section { padding: 90px 40px; width: 100%; position: relative; overflow: hidden; }
@@ -1902,7 +1910,7 @@ document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el 
     else if (fan.offsetHeight > 0) {
       const rect = fan.getBoundingClientRect();
       const total = fan.offsetHeight - vh;
-      p = Math.max(0, Math.min(1, (-rect.top + vh * 0.25) / (total * 0.8)));
+      p = Math.max(0, Math.min(1, (-rect.top + vh * 0.5) / (total * 0.7 + vh * 0.2)));
     }
     const e = ease(p);
     const w = cards[0].offsetWidth || 200;
@@ -2055,6 +2063,20 @@ document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el 
       btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
   }
+})();
+
+// ===== CARD GLARE / TITLE DECODE / SCROLL PIPELINE =====
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Glare follows the cursor on cards
+  document.querySelectorAll('.principal-card, .why-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--gx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+    });
+  });
 })();
 </script>
 </body>
