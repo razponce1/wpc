@@ -114,3 +114,16 @@ function applyStagger(selector, gridSelector) {
 }
 applyStagger('.principal-card', '.principals-grid');
 applyStagger('.why-card', '.why-grid');
+
+// Interactive gridline spotlight in hero (follows cursor)
+document.querySelectorAll('.hero').forEach(hero => {
+  const glow = hero.querySelector('.hero-grid-glow');
+  if (!glow) return;
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    glow.style.setProperty('--mx', x + 'px');
+    glow.style.setProperty('--my', y + 'px');
+  });
+});
