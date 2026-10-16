@@ -173,6 +173,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links a { color: hsla(0,0%,100%,0.8); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: 0.2s ease; font-family: var(--ff-heading); letter-spacing: 0.03em; }
 .nav-links a:hover { color: white; background: hsla(0,0%,100%,0.1); }
 .nav-links a.active { color: var(--red); }
+body.wtc-active .nav-links a.active { color: #5ab0f0; }
 .nav-cta { background: var(--red) !important; color: white !important; padding: 9px 20px !important; border-radius: 6px !important; }
 .nav-cta:hover { background: var(--red-dark) !important; }
 
@@ -498,7 +499,7 @@ body.wtc-active .principal-card::after { background: radial-gradient(circle 190p
 .story-cam > svg, .story-cam > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .story-cam > img { object-fit: cover; }
 .story-cam > img + img { opacity: 0; }
-.story-hud { position: absolute; left: 16px; top: 13px; z-index: 3; font-family: var(--ff-heading); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: hsla(0,0%,100%,0.62); text-shadow: 0 1px 6px hsla(0,0%,0%,0.6); }
+.story-hud { position: absolute; left: 14px; top: 12px; z-index: 3; padding: 6px 12px; border-radius: 100px; background: hsla(232,60%,8%,0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); font-family: var(--ff-heading); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: hsla(0,0%,100%,0.88); }
 .story-caps { position: relative; width: var(--fw); max-width: 94vw; height: clamp(150px, 24vh, 200px); margin-top: 18px; }
 .story-cap { position: absolute; left: 0; top: 0; right: 0; opacity: 0; will-change: opacity, transform; pointer-events: none; }
 .cap-kicker { font-family: var(--ff-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
@@ -511,6 +512,12 @@ body.wtc-active .principal-card::after { background: radial-gradient(circle 190p
 .story.in .sl { animation: bpDraw 1.7s cubic-bezier(0.65,0,0.35,1) forwards; animation-delay: var(--d, 0s); }
 .story.paused .sl { animation-play-state: paused; }
 .sl-g .sl { animation-delay: .8s !important; }
+.sl-g { transform-origin: 400px 260px; animation: impSpin 14s linear infinite; animation-delay: 2.4s; }
+@keyframes impSpin { to { transform: rotate(-360deg); } }
+.st-flow { fill: none; stroke: #ff8a8a; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 0.1 13; opacity: 0; filter: drop-shadow(0 0 5px hsla(0,90%,60%,0.9)); animation: flowUp 1.6s linear infinite; transition: opacity 1s ease 2.2s; }
+.story.in .st-flow { opacity: 1; }
+@keyframes flowUp { to { stroke-dashoffset: -26.2; } }
+.story.paused .sl-g, .story.paused .st-flow { animation-play-state: paused; }
 .st-bolt { fill: hsla(0,90%,66%,0.9); }
 .hl { opacity: 0; transition: opacity 0.5s ease; }
 .hl circle, .hl rect, .hl ellipse, .hl path { fill: none; stroke: #ff4d4d; stroke-width: 1.6; filter: drop-shadow(0 0 6px hsla(0,90%,60%,0.85)); }
@@ -1131,17 +1138,18 @@ footer { background: var(--navy-dark); color: white; padding: 60px 40px 30px; wi
   <path class="sl" style="--d:.1s" pathLength="1" d="M326 390 L286 438 M474 390 L514 438"/>
   <path class="sl" style="--d:.2s" pathLength="1" d="M462 134 V66 M522 191 V66"/>
   <path class="sl" style="--d:.3s" pathLength="1" d="M446 50 H538 V66 H446 Z"/>
+  <path class="st-flow" d="M400 386 A126 126 0 0 0 526 260 A126 126 0 0 0 500 183 L492 62"/>
   <circle class="st-bolt" cx="458" cy="58" r="3"/><circle class="st-bolt" cx="526" cy="58" r="3"/>
   <circle class="sl" style="--d:.2s" pathLength="1" cx="400" cy="260" r="140"/>
   <circle class="sl" style="--d:.4s" pathLength="1" cx="400" cy="260" r="112"/>
   <circle class="sl" style="--d:.6s" pathLength="1" cx="400" cy="260" r="72"/>
   <g class="sl-g" style="--d:.8s">
-    <path class="sl" pathLength="1" d="M420 260 C438 258 448 244 454 222"/>
-    <path class="sl" pathLength="1" d="M420 260 C438 258 448 244 454 222" transform="rotate(60 400 260)"/>
-    <path class="sl" pathLength="1" d="M420 260 C438 258 448 244 454 222" transform="rotate(120 400 260)"/>
-    <path class="sl" pathLength="1" d="M420 260 C438 258 448 244 454 222" transform="rotate(180 400 260)"/>
-    <path class="sl" pathLength="1" d="M420 260 C438 258 448 244 454 222" transform="rotate(240 400 260)"/>
-    <path class="sl" pathLength="1" d="M420 260 C438 258 448 244 454 222" transform="rotate(300 400 260)"/>
+    <path class="sl" pathLength="1" d="M420 260 C438 262 448 276 454 298"/>
+    <path class="sl" pathLength="1" d="M420 260 C438 262 448 276 454 298" transform="rotate(60 400 260)"/>
+    <path class="sl" pathLength="1" d="M420 260 C438 262 448 276 454 298" transform="rotate(120 400 260)"/>
+    <path class="sl" pathLength="1" d="M420 260 C438 262 448 276 454 298" transform="rotate(180 400 260)"/>
+    <path class="sl" pathLength="1" d="M420 260 C438 262 448 276 454 298" transform="rotate(240 400 260)"/>
+    <path class="sl" pathLength="1" d="M420 260 C438 262 448 276 454 298" transform="rotate(300 400 260)"/>
   </g>
   <circle class="sl" style="--d:1s" pathLength="1" cx="400" cy="260" r="20"/>
   <circle class="sl" style="--d:1.1s" pathLength="1" cx="400" cy="260" r="8"/>
